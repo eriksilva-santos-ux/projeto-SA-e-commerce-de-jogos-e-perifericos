@@ -1,1 +1,0 @@
-# projeto-SA-e-commerce-de-jogos-e-perifericos
