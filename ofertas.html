@@ -3,159 +3,218 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GameStore - Ofertas</title>
+  <title>GameStore - Ofertas e Promoções</title>
+  <!-- Bootstrap 5.3 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <style>
-    body { background-color: #0b0e14; color: #e1e1e6; min-height: 100vh; display: flex; flex-direction: column; }
-    .navbar, footer, .card-custom { background-color: #121620 !important; }
-    .navbar { border-bottom: 2px solid #ff0055; }
-    .brand-logo { font-weight: 900; color: #ff0055 !important; }
-    .btn-action { background-color: #ff0055; color: #fff; border: none; font-weight: 600; }
-    .btn-action:hover { background-color: #d90048; color: #fff; }
-    .card-custom { border: 1px solid #2d3748; border-radius: 12px; transition: 0.2s; overflow: hidden; }
-    .card-custom:hover { border-color: #ff0055; transform: translateY(-4px); }
-    .banner-promo { background: linear-gradient(135deg, #2b0918 0%, #121620 100%); border: 1px solid #ff0055; border-radius: 12px; }
-    .img-oferta { height: 180px; width: 100%; object-fit: cover; border-radius: 8px; }
+    body {
+      background-color: #0b0e14;
+      color: #e1e1e6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .navbar {
+      background-color: #121620 !important;
+      border-bottom: 2px solid #ff0055;
+    }
+    .brand-logo {
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: #ff0055 !important;
+    }
+    .btn-action {
+      background-color: #ff0055;
+      color: #fff;
+      border: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .btn-action:hover {
+      background-color: #d90048;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    .card-custom {
+      background-color: #121620;
+      border: 1px solid #2d3748;
+      border-radius: 12px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .card-custom:hover {
+      border-color: #ff0055;
+      transform: translateY(-4px);
+    }
+    .banner-promo {
+      background: linear-gradient(135deg, #2b0918 0%, #121620 100%);
+      border: 1px solid #ff0055;
+      border-radius: 12px;
+    }
+    .img-oferta {
+      height: 180px;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    footer {
+      background-color: #121620;
+      border-top: 1px solid #2d3748;
+    }
   </style>
 </head>
 <body>
 
-  <!-- NAVBAR -->
+  <!-- HEADER / NAVBAR -->
   <header class="sticky-top">
     <nav class="navbar navbar-expand-lg navbar-dark py-3">
       <div class="container">
-        <a class="navbar-brand brand-logo fs-3" href="index.html"><i class="bi bi-controller"></i> GAMESTORE</a>
-        <div class="d-flex gap-2 ms-auto">
-          <a href="index.html" class="btn btn-outline-light btn-sm">Início</a>
-          <a href="login.html" class="btn btn-outline-light btn-sm">Login</a>
-          <a href="cart.html" class="btn btn-action btn-sm"><i class="bi bi-cart3"></i> Carrinho</a>
+        <a class="navbar-brand brand-logo fs-3 d-flex align-items-center gap-2" href="index.html">
+          <i class="bi bi-controller"></i> GAMESTORE
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse mt-3 mt-lg-0" id="navbarContent">
+          <form class="d-flex mx-auto col-12 col-lg-6 my-2 my-lg-0" role="search">
+            <div class="input-group">
+              <input class="form-control bg-dark text-white border-secondary" type="search" placeholder="Busque jogos, consoles, periféricos...">
+              <button class="btn btn-action" type="submit"><i class="bi bi-search"></i></button>
+            </div>
+          </form>
+
+          <div class="d-flex align-items-center justify-content-lg-end gap-2 ms-auto">
+            <a href="index.html" class="btn btn-outline-light btn-sm text-nowrap">Início</a>
+            <a href="register.html" class="btn btn-outline-light btn-sm text-nowrap">Cadastro</a>
+            <a href="login.html" class="btn btn-outline-light btn-sm text-nowrap">Login</a>
+            <a href="cart.html" class="btn btn-action btn-sm text-nowrap position-relative">
+              <i class="bi bi-cart3"></i> Carrinho
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark">0</span>
+            </a>
+          </div>
         </div>
       </div>
     </nav>
   </header>
 
+  <!-- CONTEÚDO PRINCIPAL -->
   <main class="container my-4 flex-grow-1">
-    <!-- BANNER COMPACTO -->
-    <section class="banner-promo p-4 mb-4 d-flex flex-wrap justify-content-between align-items-center gap-3">
+
+    <!-- BANNER DE OFERTAS -->
+    <section class="banner-promo p-4 mb-5 d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
       <div>
-        <span class="badge bg-danger mb-1">OFERTAS DA SEMANA</span>
-        <h3 class="fw-bold text-white mb-0">ATÉ 50% OFF EM SETUP E JOGOS</h3>
+        <span class="badge bg-danger mb-2"><i class="bi bi-lightning-fill"></i> SEMANA GAMER</span>
+        <h2 class="fw-bold text-white mb-1">PROMOÇÕES IMPERDÍVEIS</h2>
+        <p class="text-secondary mb-0 small">Descontos especiais em jogos e periféricos por tempo limitado.</p>
       </div>
-      <div class="d-flex gap-2">
-        <button class="btn btn-action btn-sm" onclick="filtrar('todos')">Todos</button>
-        <button class="btn btn-outline-light btn-sm" onclick="filtrar('Jogos')">Jogos</button>
-        <button class="btn btn-outline-light btn-sm" onclick="filtrar('Periféricos')">Periféricos</button>
+      <div class="text-md-end">
+        <span class="badge bg-success fs-6 px-3 py-2">ATÉ 45% OFF</span>
       </div>
     </section>
 
-    <!-- VITRINE GERADA AUTOMATICAMENTE -->
-    <section class="row g-3" id="vitrine-ofertas"></section>
-  </main>
+    <!-- VITRINE DE PRODUTOS EM PROMOÇÃO -->
+    <section class="mb-5">
+      <h4 class="fw-bold mb-4 border-start border-4 border-danger ps-2">Ofertas em Destaque</h4>
+      
+      <div class="row g-3">
 
-  <!-- MODAL ÚNICO DE DETALHES (AGORA COM IMAGEM) -->
-  <div class="modal fade" id="modalDetalhes" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content card-custom p-3">
-        <div class="modal-header border-secondary">
-          <h5 class="modal-title fw-bold text-white" id="modalTitulo"></h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body text-center">
-          <img id="modalImg" src="" alt="" class="img-fluid rounded mb-3" style="max-height: 220px; object-fit: cover;">
-          <p class="text-secondary small text-start" id="modalDesc"></p>
-          <div class="text-start">
-            <span class="text-secondary text-decoration-line-through me-2" id="modalAntigo"></span>
-            <span class="fs-4 fw-bold text-success" id="modalPreco"></span>
+        <!-- Produto 1 -->
+        <div class="col-6 col-md-3">
+          <div class="card card-custom h-100 p-3 position-relative text-center">
+            <span class="badge bg-danger position-absolute top-0 start-0 m-3">-28% OFF</span>
+            <img src="imagens/mouse.png" class="img-oferta mb-3" alt="Mouse Logitech G Pro">
+            
+            <div class="card-body d-flex flex-column justify-content-between p-0">
+              <div>
+                <h6 class="card-title text-white fw-bold mb-1">Mouse Logitech G Pro X</h6>
+                <p class="card-text text-secondary small mb-2">Sem Fio • Sensor 25K</p>
+              </div>
+              <div>
+                <small class="text-secondary text-decoration-line-through d-block">R$ 899,90</small>
+                <span class="fs-5 fw-bold text-success d-block mb-3">R$ 649,90</span>
+                <a href="cart.html" class="btn btn-action w-100">Comprar</a>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="modal-footer border-secondary">
-          <a href="cart.html" class="btn btn-action w-100"><i class="bi bi-cart-plus"></i> Adicionar ao Carrinho</a>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <footer class="py-3 text-center border-top border-secondary">
-    <small class="text-secondary">© 2026 GameStore. Todos os direitos reservados.</small>
+        <!-- Produto 2 -->
+        <div class="col-6 col-md-3">
+          <div class="card card-custom h-100 p-3 position-relative text-center">
+            <span class="badge bg-danger position-absolute top-0 start-0 m-3">-35% OFF</span>
+            <img src="imagens/elden-ring.jpg" class="img-oferta mb-3" alt="Elden Ring">
+            
+            <div class="card-body d-flex flex-column justify-content-between p-0">
+              <div>
+                <h6 class="card-title text-white fw-bold mb-1">Elden Ring: Shadow of the Erdtree</h6>
+                <p class="card-text text-secondary small mb-2">PC, PS5, Xbox Series</p>
+              </div>
+              <div>
+                <small class="text-secondary text-decoration-line-through d-block">R$ 399,90</small>
+                <span class="fs-5 fw-bold text-success d-block mb-3">R$ 259,90</span>
+                <a href="cart.html" class="btn btn-action w-100">Comprar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Produto 3 -->
+        <div class="col-6 col-md-3">
+          <div class="card card-custom h-100 p-3 position-relative text-center">
+            <span class="badge bg-danger position-absolute top-0 start-0 m-3">-29% OFF</span>
+            <img src="imagens/cadeira.png" class="img-oferta mb-3" alt="Cadeira Gamer">
+            
+            <div class="card-body d-flex flex-column justify-content-between p-0">
+              <div>
+                <h6 class="card-title text-white fw-bold mb-1">Cadeira Gamer ThunderX3</h6>
+                <p class="card-text text-secondary small mb-2">Ergonômica • Reclinável</p>
+              </div>
+              <div>
+                <small class="text-secondary text-decoration-line-through d-block">R$ 1.399,00</small>
+                <span class="fs-5 fw-bold text-success d-block mb-3">R$ 999,00</span>
+                <a href="cart.html" class="btn btn-action w-100">Comprar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Produto 4 -->
+        <div class="col-6 col-md-3">
+          <div class="card card-custom h-100 p-3 position-relative text-center">
+            <span class="badge bg-danger position-absolute top-0 start-0 m-3">-43% OFF</span>
+            <img src="imagens/gow.jpg" class="img-oferta mb-3" alt="God of War Ragnarök">
+            
+            <div class="card-body d-flex flex-column justify-content-between p-0">
+              <div>
+                <h6 class="card-title text-white fw-bold mb-1">God of War Ragnarök</h6>
+                <p class="card-text text-secondary small mb-2">PS5 e PC • Mídia Digital</p>
+              </div>
+              <div>
+                <small class="text-secondary text-decoration-line-through d-block">R$ 349,90</small>
+                <span class="fs-5 fw-bold text-success d-block mb-3">R$ 199,90</span>
+                <a href="cart.html" class="btn btn-action w-100">Comprar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="py-4 mt-auto">
+    <div class="container text-center">
+      <p class="text-secondary small mb-0">
+        © 2026 GameStore. Todos os direitos reservados. Termos de Direitos Autorais.
+      </p>
+    </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    // Coloque aqui o caminho da sua pasta "imagens/..." ou uma URL da internet
-    const ofertas = [
-      {
-        id: 1,
-        nome: "Teclado Wooting 60HE+",
-        cat: "Periféricos",
-        img: "imagens/Teclado.png",
-        desc: "Teclado mecânico analógico de alta precisão para jogos competitivos.",
-        antigo: "R$ 2.099,00",
-        preco: "R$ 1.826,00",
-        off: "-13%"
-      },
-      {
-        id: 2,
-        nome: "Grand Theft Auto VI",
-        cat: "Jogos",
-        img: "imagens/GTA_VI_cover.jpg",
-        desc: "Explore Leonida e Vice City na maior evolução da franquia.",
-        antigo: "R$ 399,90",
-        preco: "R$ 349,90",
-        off: "-12%"
-      },
-      {
-        id: 3,
-        nome: "PlayStation 5 Pro",
-        cat: "Periféricos",
-        img: "https://images.kabum.com.br/produtos/fotos/636960/console-playstation-5-pro-sony-ssd-2tb-controle-sem-fio-dualsense-branco-1000046552_1727095996_g.jpg",
-        desc: "Console com SSD de 2TB e ray tracing avançado.",
-        antigo: "R$ 7.499,00",
-        preco: "R$ 6.999,00",
-        off: "-7%"
-      },
-      {
-        id: 4,
-        nome: "Monitor Gamer 240Hz",
-        cat: "Periféricos",
-        img: "https://via.placeholder.com/400x250?text=Sua+Imagem+Aqui",
-        desc: "Tela IPS 1ms com taxa de atualização ultra rápida.",
-        antigo: "R$ 1.499,00",
-        preco: "R$ 899,00",
-        off: "-40%"
-      }
-    ];
-
-    function renderizar(lista) {
-      document.getElementById("vitrine-ofertas").innerHTML = lista.map(p => `
-        <div class="col-6 col-md-3">
-          <div class="card card-custom h-100 p-3 text-center position-relative">
-            <span class="badge bg-danger position-absolute top-0 start-0 m-3 shadow">${p.off}</span>
-            <img src="${p.img}" alt="${p.nome}" class="img-oferta mb-3">
-            <h6 class="text-white fw-bold mb-1">${p.nome}</h6>
-            <small class="text-secondary text-decoration-line-through">${p.antigo}</small>
-            <span class="fs-5 fw-bold text-success mb-3">${p.preco}</span>
-            <button class="btn btn-action btn-sm mt-auto" onclick="abrirModal(${p.id})">Ver Oferta</button>
-          </div>
-        </div>
-      `).join("");
-    }
-
-    function filtrar(categoria) {
-      renderizar(categoria === "todos" ? ofertas : ofertas.filter(p => p.cat === categoria));
-    }
-
-    function abrirModal(id) {
-      const p = ofertas.find(item => item.id === id);
-      document.getElementById("modalTitulo").innerText = p.nome;
-      document.getElementById("modalImg").src = p.img;
-      document.getElementById("modalDesc").innerText = p.desc;
-      document.getElementById("modalAntigo").innerText = p.antigo;
-      document.getElementById("modalPreco").innerText = p.preco;
-      new bootstrap.Modal(document.getElementById("modalDetalhes")).show();
-    }
-
-    renderizar(ofertas);
-  </script>
 </body>
 </html>
