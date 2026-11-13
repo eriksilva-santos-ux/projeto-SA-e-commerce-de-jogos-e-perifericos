@@ -3,104 +3,159 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GameStore - E-commerce de Jogos e Acessórios</title>
-  <!-- Bootstrap 5.3 CSS -->
+  <title>GameStore - Ofertas</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap Icons  -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <style>
-    body {
-      background-color: #0b0e14;
-      color: #e1e1e6;
-    }
-    .navbar {
-      background-color: #121620 !important;
-      border-bottom: 2px solid #ff0055;
-    }
-    .brand-logo {
-      font-weight: 900;
-      letter-spacing: 1px;
-      color: #ff0055 !important;
-    }
-    .hero-banner {
-      background: linear-gradient(135deg, #1f2533 0%, #0b0e14 100%);
-      border: 1px solid #2d3748;
-      border-radius: 12px;
-      min-height: 280px;
-    }
-    .btn-action {
-      background-color: #ff0055;
-      color: #fff;
-      border: none;
-      font-weight: 600;
-      transition: all 0.3s ease;
-    }
-    .btn-action:hover {
-      background-color: #d90048;
-      color: #fff;
-      transform: translateY(-2px);
-    }
-    .card-custom {
-      background-color: #121620;
-      border: 1px solid #2d3748;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-    .card-custom:hover {
-      border-color: #ff0055;
-      transform: translateY(-4px);
-    }
-    footer {
-      background-color: #121620;
-      border-top: 1px solid #2d3748;
-    }
+    body { background-color: #0b0e14; color: #e1e1e6; min-height: 100vh; display: flex; flex-direction: column; }
+    .navbar, footer, .card-custom { background-color: #121620 !important; }
+    .navbar { border-bottom: 2px solid #ff0055; }
+    .brand-logo { font-weight: 900; color: #ff0055 !important; }
+    .btn-action { background-color: #ff0055; color: #fff; border: none; font-weight: 600; }
+    .btn-action:hover { background-color: #d90048; color: #fff; }
+    .card-custom { border: 1px solid #2d3748; border-radius: 12px; transition: 0.2s; overflow: hidden; }
+    .card-custom:hover { border-color: #ff0055; transform: translateY(-4px); }
+    .banner-promo { background: linear-gradient(135deg, #2b0918 0%, #121620 100%); border: 1px solid #ff0055; border-radius: 12px; }
+    .img-oferta { height: 180px; width: 100%; object-fit: cover; border-radius: 8px; }
   </style>
 </head>
 <body>
 
-  <!-- HEADER / NAVBAR (Logo, Busca, Cadastro, Login, Carrinho) -->
+  <!-- NAVBAR -->
   <header class="sticky-top">
     <nav class="navbar navbar-expand-lg navbar-dark py-3">
       <div class="container">
-        <!-- Logo -->
-        <a class="navbar-brand brand-logo fs-3 d-flex align-items-center gap-2">
-          <i class="bi bi-controller"></i> GAMESTORE
-        </a>
-
-        <!-- Botão Toggle Mobile -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse mt-3 mt-lg-0" id="navbarContent">
-          <!-- Barra de Pesquisa -->
-          <form class="d-flex mx-auto col-12 col-lg-6 my-2 my-lg-0" role="search">
-            <div class="input-group">
-              <input class="form-control bg-dark text-white border-secondary" type="search" placeholder="Busque jogos, consoles, periféricos..." aria-label="Pesquisa">
-              <button class="btn btn-action" type="submit">
-                <i class="bi bi-search"></i>
-              </button>
-            </div>
-          </form>
-
-          <!-- Ações de Usuário (Cadastro, Login, Carrinho) -->
-         <a href="index.html" class="btn btn-outline-light btn-sm text-nowrap">
-              <i class="bi bi-person-plus"></i> início
-            </a>
-
-            <a href="register.html" class="btn btn-outline-light btn-sm text-nowrap">
-              <i class="bi bi-person-plus"></i> Cadastro
-            </a>
-            <a href="login.html" class="btn btn-outline-light btn-sm text-nowrap">
-              <i class="bi bi-box-arrow-in-right"></i> Login
-            </a>
-            <a href="cart.html" class="btn btn-action btn-sm text-nowrap position-relative">
-              <i class="bi bi-cart3"></i> Carrinho
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark">
-                0
-              </span>
-            </a>
-          </div>
+        <a class="navbar-brand brand-logo fs-3" href="index.html"><i class="bi bi-controller"></i> GAMESTORE</a>
+        <div class="d-flex gap-2 ms-auto">
+          <a href="index.html" class="btn btn-outline-light btn-sm">Início</a>
+          <a href="login.html" class="btn btn-outline-light btn-sm">Login</a>
+          <a href="cart.html" class="btn btn-action btn-sm"><i class="bi bi-cart3"></i> Carrinho</a>
         </div>
       </div>
     </nav>
   </header>
+
+  <main class="container my-4 flex-grow-1">
+    <!-- BANNER COMPACTO -->
+    <section class="banner-promo p-4 mb-4 d-flex flex-wrap justify-content-between align-items-center gap-3">
+      <div>
+        <span class="badge bg-danger mb-1">OFERTAS DA SEMANA</span>
+        <h3 class="fw-bold text-white mb-0">ATÉ 50% OFF EM SETUP E JOGOS</h3>
+      </div>
+      <div class="d-flex gap-2">
+        <button class="btn btn-action btn-sm" onclick="filtrar('todos')">Todos</button>
+        <button class="btn btn-outline-light btn-sm" onclick="filtrar('Jogos')">Jogos</button>
+        <button class="btn btn-outline-light btn-sm" onclick="filtrar('Periféricos')">Periféricos</button>
+      </div>
+    </section>
+
+    <!-- VITRINE GERADA AUTOMATICAMENTE -->
+    <section class="row g-3" id="vitrine-ofertas"></section>
+  </main>
+
+  <!-- MODAL ÚNICO DE DETALHES (AGORA COM IMAGEM) -->
+  <div class="modal fade" id="modalDetalhes" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content card-custom p-3">
+        <div class="modal-header border-secondary">
+          <h5 class="modal-title fw-bold text-white" id="modalTitulo"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-center">
+          <img id="modalImg" src="" alt="" class="img-fluid rounded mb-3" style="max-height: 220px; object-fit: cover;">
+          <p class="text-secondary small text-start" id="modalDesc"></p>
+          <div class="text-start">
+            <span class="text-secondary text-decoration-line-through me-2" id="modalAntigo"></span>
+            <span class="fs-4 fw-bold text-success" id="modalPreco"></span>
+          </div>
+        </div>
+        <div class="modal-footer border-secondary">
+          <a href="cart.html" class="btn btn-action w-100"><i class="bi bi-cart-plus"></i> Adicionar ao Carrinho</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="py-3 text-center border-top border-secondary">
+    <small class="text-secondary">© 2026 GameStore. Todos os direitos reservados.</small>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Coloque aqui o caminho da sua pasta "imagens/..." ou uma URL da internet
+    const ofertas = [
+      {
+        id: 1,
+        nome: "Teclado Wooting 60HE+",
+        cat: "Periféricos",
+        img: "imagens/Teclado.png",
+        desc: "Teclado mecânico analógico de alta precisão para jogos competitivos.",
+        antigo: "R$ 2.099,00",
+        preco: "R$ 1.826,00",
+        off: "-13%"
+      },
+      {
+        id: 2,
+        nome: "Grand Theft Auto VI",
+        cat: "Jogos",
+        img: "imagens/GTA_VI_cover.jpg",
+        desc: "Explore Leonida e Vice City na maior evolução da franquia.",
+        antigo: "R$ 399,90",
+        preco: "R$ 349,90",
+        off: "-12%"
+      },
+      {
+        id: 3,
+        nome: "PlayStation 5 Pro",
+        cat: "Periféricos",
+        img: "https://images.kabum.com.br/produtos/fotos/636960/console-playstation-5-pro-sony-ssd-2tb-controle-sem-fio-dualsense-branco-1000046552_1727095996_g.jpg",
+        desc: "Console com SSD de 2TB e ray tracing avançado.",
+        antigo: "R$ 7.499,00",
+        preco: "R$ 6.999,00",
+        off: "-7%"
+      },
+      {
+        id: 4,
+        nome: "Monitor Gamer 240Hz",
+        cat: "Periféricos",
+        img: "https://static.wixstatic.com/media/71a6c2_4f397a972cca408ea36293284b3e848c~mv2.png/v1/fill/w_315,h_388,al_c,q_85,enc_avif,quality_auto/repetidor-ombra.png",
+        desc: "Tela IPS 1ms com taxa de atualização ultra rápida.",
+        antigo: "R$ 1.499,00",
+        preco: "R$ 899,00",
+        off: "-40%"
+      }
+    ];
+
+    function renderizar(lista) {
+      document.getElementById("vitrine-ofertas").innerHTML = lista.map(p => `
+        <div class="col-6 col-md-3">
+          <div class="card card-custom h-100 p-3 text-center position-relative">
+            <span class="badge bg-danger position-absolute top-0 start-0 m-3 shadow">${p.off}</span>
+            <img src="${p.img}" alt="${p.nome}" class="img-oferta mb-3">
+            <h6 class="text-white fw-bold mb-1">${p.nome}</h6>
+            <small class="text-secondary text-decoration-line-through">${p.antigo}</small>
+            <span class="fs-5 fw-bold text-success mb-3">${p.preco}</span>
+            <button class="btn btn-action btn-sm mt-auto" onclick="abrirModal(${p.id})">Ver Oferta</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function filtrar(categoria) {
+      renderizar(categoria === "todos" ? ofertas : ofertas.filter(p => p.cat === categoria));
+    }
+
+    function abrirModal(id) {
+      const p = ofertas.find(item => item.id === id);
+      document.getElementById("modalTitulo").innerText = p.nome;
+      document.getElementById("modalImg").src = p.img;
+      document.getElementById("modalDesc").innerText = p.desc;
+      document.getElementById("modalAntigo").innerText = p.antigo;
+      document.getElementById("modalPreco").innerText = p.preco;
+      new bootstrap.Modal(document.getElementById("modalDetalhes")).show();
+    }
+
+    renderizar(ofertas);
+  </script>
+</body>
+</html>
