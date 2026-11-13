@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameStore - E-commerce de Jogos e Acessórios</title>
+  <!-- Bootstrap 5.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons  -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    body {
+      background-color: #0b0e14;
+      color: #e1e1e6;
+    }
+    .navbar {
+      background-color: #121620 !important;
+      border-bottom: 2px solid #ff0055;
+    }
+    .brand-logo {
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: #ff0055 !important;
+    }
+    .hero-banner {
+      background: linear-gradient(135deg, #1f2533 0%, #0b0e14 100%);
+      border: 1px solid #2d3748;
+      border-radius: 12px;
+      min-height: 280px;
+    }
+    .btn-action {
+      background-color: #ff0055;
+      color: #fff;
+      border: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .btn-action:hover {
+      background-color: #d90048;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    .card-custom {
+      background-color: #121620;
+      border: 1px solid #2d3748;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .card-custom:hover {
+      border-color: #ff0055;
+      transform: translateY(-4px);
+    }
+    footer {
+      background-color: #121620;
+      border-top: 1px solid #2d3748;
+    }
+    figure{
+    margin: 1.5rem 0;
+    text-align: center;
+}
+figure img{
+    max-width: 100%; /*imagem nunca ultrapassa o container*/
+    border-radius: 10px; /*cantos arredondados*/
+    box-shadow: 0 8px 24px rgba(255, 49, 49); /*brilho sutil neon*/
+}
+figcaption{
+    margin-top: 0.6rem;
+    font-size: 0.9rem;
+    color: #9a9ab0;
+}
+.logo-container {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center;     /* Alinha verticalmente no centro */
+    flex-wrap: wrap;         /* Permite que as imagens quebrem linha em telas menores */
+    gap: 1.5rem;             /* Espaço uniforme entre as imagens */
+    margin: 1.5rem 0;
+}
+
+/* Alinha o título H2 no centro */
+h2 {
+    text-align: center;
+}
+
+/* Garante que as imagens dentro das divs fiquem bem ajustadas */
+.logo-container img {
+    display: block;
+    object-fit: contain;
+    border-radius: 8px; /* Cantos arredondados opcionais */
+}
+/* O efeito de aumento agora é aplicado no quadrado inteiro */
+.zoom-container {
+    width: 250px;        
+    display: inline-block; /* Alinha os quadrados lado a lado */
+    margin: 20px;          /* Espaço entre os quadrados para não baterem ao crescer */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve para destacar o quadrado */
+    
+    /* Tempo da animação do quadrado */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+/* A imagem apenas preenche o tamanho do quadrado */
+.zoom-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;     /* Garante que a imagem preencha o quadrado sem distorcer */
+    border-radius: 8px;
+}
+
+/* Efeito ao passar o mouse: O QUADRADO cresce e ganha mais sombra */
+.zoom-container:hover {
+    transform: scale(1.15); /* Aumenta o quadrado em 15% */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra aumenta no hover */
+}
+  </style>
+</head>
+<body>
+
+  <!-- HEADER / NAVBAR (Logo, Busca, Cadastro, Login, Carrinho) -->
+  <header class="sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark py-3">
+      <div class="container">
+        <!-- Logo -->
+        <a class="navbar-brand brand-logo fs-3 d-flex align-items-center gap-2" 
+          <i class="bi bi-controller"></i> GAMESTORE
+        </a>
+
+        <!-- Botão Toggle Mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse mt-3 mt-lg-0" id="navbarContent">
+          <!-- Barra de Pesquisa -->
+          <form class="d-flex mx-auto col-12 col-lg-6 my-2 my-lg-0" role="search">
+            <div class="input-group">
+              <input class="form-control bg-dark text-white border-secondary" type="search" placeholder="Busque jogos, consoles, periféricos..." aria-label="Pesquisa">
+              <button class="btn btn-action" type="submit">
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
+          </form>
+
+          <!-- Ações de Usuário (Cadastro, Login, Carrinho) -->
+            <a href="index.html" class="btn btn-outline-light btn-sm text-nowrap">
+              <i class="bi bi-person-plus"></i> início
+            </a>
+
+            <a href="register.html" class="btn btn-outline-light btn-sm text-nowrap">
+              <i class="bi bi-person-plus"></i> Cadastro
+            </a>
+            <a href="login.html" class="btn btn-outline-light btn-sm text-nowrap">
+              <i class="bi bi-box-arrow-in-right"></i> Login
+            </a>
+            <a href="cart.html" class="btn btn-action btn-sm text-nowrap position-relative">
+              <i class="bi bi-cart3"></i> Carrinho
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark">
+                0
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container my-5">
+  <section class="card-custom p-4 rounded-4">
+    <div class="row g-4 align-items-center">
+      
+      <!-- Coluna da Esquerda: Imagem com efeito Zoom -->
+      <div class="col-12 col-md-5 col-lg-4 text-center">
+        <div class="zoom-container">
+          <img src="imagens/GTA_VI_cover.jpg" alt="Capa do jogo GTA VI" loading="lazy">
+        </div>
+      </div>
+
+      <!-- Coluna da Direita: Informações de Compra -->
+      <div class="col-12 col-md-7 col-lg-8">
+        <span class="badge bg-danger mb-2 px-3 py-2">Pré-venda</span>
+        <h1 class="fw-bold mb-2">Grand Theft Auto VI</h1>
+        <p class="text-muted small mb-3">Desenvolvedora: Rockstar Games | Categoria: Ação / Mundo Aberto</p>
+        
+        <p class="lh-sm mb-4">
+          Grand Theft Auto VI leva você para o estado de Leonida, lar das ruas em neon de Vice City, na maior e mais imersiva evolução da franquia até hoje.
+        </p>
+
+        <!-- Preço -->
+        <div class="mb-4">
+          <span class="fs-4 text-muted text-decoration-line-through me-2">R$ 399,90</span>
+          <span class="fs-2 fw-bold text-white">R$ 349,90</span>
+          <span class="badge bg-success ms-2">12% OFF</span>
+        </div>
+
+        <!-- Opções / Plataforma -->
+        <div class="mb-4">
+          <label class="form-label fw-semibold">Selecione a Plataforma:</label>
+          <div class="d-flex gap-2 flex-wrap">
+            <input type="radio" class="btn-check" name="platform" id="ps5" checked>
+            <label class="btn btn-outline-secondary" for="ps5"><i class="bi bi-playstation"></i> PS5</label>
+
+            <input type="radio" class="btn-check" name="platform" id="xbox">
+            <label class="btn btn-outline-secondary" for="xbox"><i class="bi bi-xbox"></i> Xbox Series X</label>
+
+            <input type="radio" class="btn-check" name="platform" id="pc">
+            <label class="btn btn-outline-secondary" for="pc"><i class="bi bi-pc-display"></i> PC</label>
+          </div>
+        </div>
+
+        <!-- Botões de Ação -->
+        <div class="d-flex gap-3 flex-wrap align-items-center">
+          <button class="btn btn-action btn-lg px-4 py-2 d-flex align-items-center gap-2">
+            <i class="bi bi-bag-check-fill fs-5"></i> Comprar Agora
+          </button>
+          <button class="btn btn-outline-light btn-lg px-3 py-2" title="Adicionar aos Favoritos">
+            <i class="bi bi-heart"></i>
+          </button>
+        </div>
+
+        <!-- Informações adicionais -->
+        <div class="mt-4 pt-3 border-top border-secondary-subtle d-flex gap-4 text-muted small">
+          <div><i class="bi bi-truck text-danger"></i> Entrega Digital Imediata</div>
+          <div><i class="bi bi-shield-check text-danger"></i> Compra 100% Segura</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="py-4 mt-auto">
+    <div class="container">
+      <div class="row align-items-center gy-3">
+        <div class="col-md-12 text-center">
+          <p class="text-secondary small mb-0">
+            © 2026 GameStore. Todos os direitos reservados. Termos de Direitos Autorais.
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5.3 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
