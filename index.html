@@ -9,7 +9,8 @@
   <style>
     body { 
       background-color: #0b0e14; 
-      color: #e1e1e6; }
+      color: #e1e1e6; 
+    }
     .navbar { 
       background-color: #121620 !important; 
       border-bottom: 2px solid #ff0055; 
@@ -26,11 +27,12 @@
       min-height: 280px; 
     }
     .btn-action { 
-      background-color: #ff0055; color: #fff; 
+      background-color: #ff0055; 
+      color: #fff; 
       border: none; 
       font-weight: 600; 
       transition: all 0.3s ease;
-   }
+    }
     .btn-action:hover { 
       background-color: #d90048; 
       color: #fff; 
@@ -64,13 +66,20 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse mt-3 mt-lg-0" id="navbarContent">
-          <form class="d-flex mx-auto col-12 col-lg-5 my-2 my-lg-0" role="search">
+          <!-- BARRA DE PESQUISA COM IDs -->
+          <form id="searchForm" class="d-flex mx-auto col-12 col-lg-5 my-2 my-lg-0" role="search">
             <div class="input-group">
-              <input class="form-control bg-dark text-white border-secondary" type="search" placeholder="Busque jogos, consoles, periféricos..." aria-label="Pesquisa">
-              <button class="btn btn-action" type="submit"><i class="bi bi-search"></i></button>
+              <input id="searchInput" class="form-control bg-dark text-white border-secondary" type="search" placeholder="Busque jogos, consoles, periféricos..." aria-label="Pesquisa" autocomplete="off">
+              <button id="clearSearchBtn" class="btn btn-outline-secondary d-none" type="button" title="Limpar busca">
+                <i class="bi bi-x-lg"></i>
+              </button>
+              <button class="btn btn-action" type="submit">
+                <i class="bi bi-search"></i>
+              </button>
             </div>
           </form>
-          <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0 ms-auto">
+
+          <div id="navUserActions" class="d-flex align-items-center gap-2 mt-2 mt-lg-0 ms-auto">
             <a href="index.html" class="btn btn-outline-light btn-sm text-nowrap">
               <i class="bi bi-house-door"></i> Início
             </a>
@@ -94,8 +103,27 @@
   </header>
 
   <main class="container my-4 flex-grow-1">
+    <!-- AVISO DE RESULTADO DE PESQUISA (Aparece só quando há busca) -->
+    <div id="searchStatusBanner" class="d-none justify-content-between align-items-center bg-dark border border-secondary rounded p-3 mb-4">
+      <div>
+        <i class="bi bi-search text-danger me-2"></i>
+        <span id="searchStatusText" class="text-white fw-semibold"></span>
+      </div>
+      <button onclick="limparPesquisa()" class="btn btn-outline-danger btn-sm">
+        <i class="bi bi-arrow-left me-1"></i> Voltar para a loja
+      </button>
+    </div>
+
+    <!-- MENSAGEM DE NENHUM PRODUTO ENCONTRADO -->
+    <div id="noResultsMessage" class="d-none text-center py-5 my-4">
+      <i class="bi bi-emoji-frown display-1 text-secondary"></i>
+      <h4 class="text-white mt-3">Nenhum produto encontrado</h4>
+      <p class="text-secondary">Não encontramos resultados para "<strong id="searchedTerm" class="text-danger"></strong>". Tente buscar por outro termo como <em>PS5</em>, <em>Teclado</em> ou <em>Zelda</em>.</p>
+      <button onclick="limparPesquisa()" class="btn btn-action mt-2">Ver todos os produtos</button>
+    </div>
+
     <!-- SEÇÃO BANNER -->
-    <section class="mb-5">
+    <section id="heroSection" class="mb-5">
       <div id="mainCarousel" class="hero-banner p-4 p-md-5 d-flex align-items-center justify-content-between shadow">
         <div class="row w-100 align-items-center">
           <div class="col-md-7 text-start">
@@ -114,11 +142,11 @@
     </section>
 
     <!-- SEÇÃO PRODUTOS EM DESTAQUE -->
-    <section id="destaques" class="mb-5">
-      <h4 class="fw-bold mb-4 border-start border-4 border-danger ps-2">Produtos em Destaque</h4>
+    <section id="destaques" class="product-section mb-5">
+      <h4 class="section-title fw-bold mb-4 border-start border-4 border-danger ps-2">Produtos em Destaque</h4>
       <div class="row g-3">
         <!-- Produto 1 -->
-        <div class="col-6 col-md-3">
+        <div class="col-6 col-md-3 product-item">
           <div class="card card-custom h-100 p-3">
             <img src="imagens/GTA_VI_cover.jpg" onerror="this.src='https://placehold.co/300x200/121620/ff0055?text=GTA+VI'" class="card-img-top rounded mb-3" alt="GTA VI" style="height: 200px; object-fit: cover; width: 100%;">
             <div class="card-body d-flex flex-column justify-content-between p-0 text-center">
@@ -141,7 +169,7 @@
         </div>
 
         <!-- Produto 2 -->
-        <div class="col-6 col-md-3">
+        <div class="col-6 col-md-3 product-item">
           <div class="card card-custom h-100 p-3">
             <img src="https://http2.mlstatic.com/D_Q_NP_2X_660385-MLB117250273565_092026-P.webp" class="card-img-top rounded mb-3" alt="Teclado Wooting 60HE+" style="height: 200px; object-fit: cover; width: 100%;">
             <div class="card-body d-flex flex-column justify-content-between p-0 text-center">
@@ -164,7 +192,7 @@
         </div>
 
         <!-- Produto 3 -->
-        <div class="col-6 col-md-3">
+        <div class="col-6 col-md-3 product-item">
           <div class="card card-custom h-100 p-3">
             <img src="https://static.wixstatic.com/media/71a6c2_4f397a972cca408ea36293284b3e848c~mv2.png/v1/fill/w_315,h_388,al_c,q_85,enc_avif,quality_auto/repetidor-ombra.png" class="card-img-top rounded mb-3" alt="Monitor Gamer Redragon" style="height: 200px; object-fit: cover; width: 100%;">
             <div class="card-body d-flex flex-column justify-content-between p-0 text-center">
@@ -187,7 +215,7 @@
         </div>
 
         <!-- Produto 4 -->
-        <div class="col-6 col-md-3">
+        <div class="col-6 col-md-3 product-item">
           <div class="card card-custom h-100 p-3">
             <img src="https://images.kabum.com.br/produtos/fotos/636960/console-playstation-5-pro-sony-ssd-2tb-controle-sem-fio-dualsense-branco-1000046552_1727095996_g.jpg" class="card-img-top rounded mb-3" alt="PlayStation 5 Pro" style="height: 200px; object-fit: cover; width: 100%;">
             <div class="card-body d-flex flex-column justify-content-between p-0 text-center">
@@ -212,10 +240,10 @@
     </section>
 
     <!-- SEÇÃO MAIS JOGOS E CONSOLES -->
-    <section class="mb-5">
+    <section class="product-section mb-5">
       <div class="row g-3">
         <!-- Produto 5 -->
-        <div class="col-6 col-md-3">
+        <div class="col-6 col-md-3 product-item">
           <div class="card card-custom h-100 p-3">
             <img src="https://www.outerspace.com.br/wp-content/uploads/2018/04/reddeadredemption2.jpg" class="card-img-top rounded mb-3" alt="RED DEAD REDEMPTION 2" style="height: 200px; object-fit: cover; width: 100%;">
             <div class="card-body d-flex flex-column justify-content-between p-0 text-center">
@@ -238,7 +266,7 @@
         </div>
 
         <!-- Produto 6 -->
-        <div class="col-6 col-md-3">
+        <div class="col-6 col-md-3 product-item">
           <div class="card card-custom h-100 p-3">
             <img src="https://assets.nintendo.com/image/upload/q_auto/f_auto/store/software/switch/70010000015154/3d45a55169bcdeccb5fc315d6c0fe7d8f2733a8545e744f1d28b3d68a69083d3" class="card-img-top rounded mb-3" alt="MORTAL KOMBAT 11" style="height: 200px; object-fit: cover; width: 100%;">
             <div class="card-body d-flex flex-column justify-content-between p-0 text-center">
@@ -261,7 +289,7 @@
         </div>
 
         <!-- Produto 7 -->
-        <div class="col-6 col-md-3">
+        <div class="col-6 col-md-3 product-item">
           <div class="card card-custom h-100 p-3">
             <img src="imagens/zelda.png" onerror="this.src='https://placehold.co/300x200/121620/ff0055?text=Zelda+Ocarina'" class="card-img-top rounded mb-3" alt="Zelda" style="height: 200px; object-fit: cover; width: 100%;">
             <div class="card-body d-flex flex-column justify-content-between p-0 text-center">
@@ -284,7 +312,7 @@
         </div>
 
         <!-- Produto 8 -->
-        <div class="col-6 col-md-3">
+        <div class="col-6 col-md-3 product-item">
           <div class="card card-custom h-100 p-3">
             <img src="https://m.media-amazon.com/images/I/61lav1BRn9L.jpg" class="card-img-top rounded mb-3" alt="NINTENDO SWITCH 2" style="height: 200px; object-fit: cover; width: 100%;">
             <div class="card-body d-flex flex-column justify-content-between p-0 text-center">
@@ -309,11 +337,11 @@
     </section>
 
     <!-- SEÇÃO PRODUTOS EM PROMOÇÃO -->
-    <section class="mb-5">
-      <h4 class="fw-bold mb-4 border-start border-4 border-danger ps-2">Periféricos em Promoção</h4>
+    <section class="product-section mb-5">
+      <h4 class="section-title fw-bold mb-4 border-start border-4 border-danger ps-2">Periféricos em Promoção</h4>
       <div class="row g-3">
         <!-- Produto 9 -->
-        <div class="col-6 col-md-3">
+        <div class="col-6 col-md-3 product-item">
           <div class="card card-custom h-100 p-3">
             <img src="https://media.pichau.com.br/media/catalog/product/cache/74c1057f7991b4edb2bc7bdaa94de933/p/g/pg-glwp-bl011_1.jpg" class="card-img-top rounded mb-3" alt="Controle Pichau Glower P1" style="height: 200px; object-fit: cover; width: 100%;">
             <div class="card-body d-flex flex-column justify-content-between p-0 text-center">
@@ -336,7 +364,7 @@
         </div>
 
         <!-- Produto 10 -->
-        <div class="col-6 col-md-3">
+        <div class="col-6 col-md-3 product-item">
           <div class="card card-custom h-100 p-3">
             <img src="https://m.media-amazon.com/images/I/51igRGdEOHL.jpg_BO30,255,255,255_UF750,750_SR1910,1000,0,C_QL100_.jpg" class="card-img-top rounded mb-3" alt="Headset Gamer" style="height: 200px; object-fit: cover; width: 100%;">
             <div class="card-body d-flex flex-column justify-content-between p-0 text-center">
@@ -359,7 +387,7 @@
         </div>
 
         <!-- Produto 11 -->
-        <div class="col-6 col-md-3">
+        <div class="col-6 col-md-3 product-item">
           <div class="card card-custom h-100 p-3">
             <img src="https://http2.mlstatic.com/D_Q_NP_2X_660385-MLB117250273565_092026-P.webp" class="card-img-top rounded mb-3" alt="Teclado Wooting Promo" style="height: 200px; object-fit: cover; width: 100%;">
             <div class="card-body d-flex flex-column justify-content-between p-0 text-center">
@@ -382,7 +410,7 @@
         </div>
 
         <!-- Produto 12 -->
-        <div class="col-6 col-md-3">
+        <div class="col-6 col-md-3 product-item">
           <div class="card card-custom h-100 p-3">
             <img src="https://images.tcdn.com.br/img/img_prod/684553/controle_xbox_one_azul_seminovo_4311_1_5f1dc1c6ce796e85407e5acc5e31a390.jpg" class="card-img-top rounded mb-3" alt="Controle Xbox One S Azul" style="height: 200px; object-fit: cover; width: 100%;">
             <div class="card-body d-flex flex-column justify-content-between p-0 text-center">
@@ -434,13 +462,16 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="auth.js"></script>
   <script>
+    // --- FUNÇÕES DO CARRINHO ---
     function getCart() { return JSON.parse(localStorage.getItem('gamestore_cart')) || []; }
     function saveCart(cart) { localStorage.setItem('gamestore_cart', JSON.stringify(cart)); updateCartBadge(); }
     function updateCartBadge() {
       const cart = getCart();
       const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
-      document.getElementById('cart-badge').innerText = totalItems;
+      const badge = document.getElementById('cart-badge');
+      if (badge) badge.innerText = totalItems;
     }
     function addToCart(id, name, price, category, image) {
       let cart = getCart();
@@ -451,7 +482,110 @@
       document.getElementById('toast-message').innerHTML = `<strong>${name}</strong> adicionado! <a href="cart.html" class="text-warning text-decoration-underline ms-1">Ver carrinho</a>`;
       new bootstrap.Toast(document.getElementById('cartToast'), { delay: 3000 }).show();
     }
-    document.addEventListener('DOMContentLoaded', updateCartBadge);
+
+    // --- FUNÇÕES DA BARRA DE PESQUISA ---
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('searchInput');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
+    const heroSection = document.getElementById('heroSection');
+    const searchStatusBanner = document.getElementById('searchStatusBanner');
+    const searchStatusText = document.getElementById('searchStatusText');
+    const noResultsMessage = document.getElementById('noResultsMessage');
+    const searchedTermSpan = document.getElementById('searchedTerm');
+
+    // Remove acentos e deixa tudo em minúsculo para facilitar a busca
+    function normalizarTexto(texto) {
+      return texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+
+    function filtrarProdutos(termoBruto) {
+      const termo = normalizarTexto(termoBruto.trim());
+      const produtos = document.querySelectorAll('.product-item');
+      const secoes = document.querySelectorAll('.product-section');
+      let encontrados = 0;
+
+      // Mostra/esconde botão 'X' dentro do input
+      if (termo.length > 0) {
+        clearSearchBtn.classList.remove('d-none');
+        heroSection.classList.add('d-none');
+      } else {
+        clearSearchBtn.classList.add('d-none');
+        heroSection.classList.remove('d-none');
+        searchStatusBanner.classList.add('d-none');
+        searchStatusBanner.classList.remove('d-flex');
+        noResultsMessage.classList.add('d-none');
+      }
+
+      // Filtra cada card de produto pelo título ou plataforma/categoria
+      produtos.forEach(card => {
+        const titulo = normalizarTexto(card.querySelector('.card-title').textContent);
+        const categoria = normalizarTexto(card.querySelector('.card-text').textContent);
+
+        if (termo === '' || titulo.includes(termo) || categoria.includes(termo)) {
+          card.classList.remove('d-none');
+          encontrados++;
+        } else {
+          card.classList.add('d-none');
+        }
+      });
+
+      // Esconde seções que ficaram sem nenhum produto visível
+      secoes.forEach(secao => {
+        const visiveisNaSecao = secao.querySelectorAll('.product-item:not(.d-none)').length;
+        if (visiveisNaSecao === 0) {
+          secao.classList.add('d-none');
+        } else {
+          secao.classList.remove('d-none');
+        }
+      });
+
+      // Atualiza banners de status da busca
+      if (termo.length > 0) {
+        if (encontrados > 0) {
+          searchStatusBanner.classList.remove('d-none');
+          searchStatusBanner.classList.add('d-flex');
+          searchStatusText.textContent = `Mostrando ${encontrados} resultado(s) para "${termoBruto.trim()}"`;
+          noResultsMessage.classList.add('d-none');
+        } else {
+          searchStatusBanner.classList.add('d-none');
+          searchStatusBanner.classList.remove('d-flex');
+          searchedTermSpan.textContent = termoBruto.trim();
+          noResultsMessage.classList.remove('d-none');
+        }
+      }
+    }
+
+    function limparPesquisa() {
+      searchInput.value = '';
+      filtrarProdutos('');
+      // Limpa o parâmetro ?q= da URL se existir
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    // Filtra em tempo real enquanto digita
+    searchInput.addEventListener('input', (e) => {
+      filtrarProdutos(e.target.value);
+    });
+
+    // Impede recarregamento da página ao apertar Enter ou clicar na lupa
+    searchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      filtrarProdutos(searchInput.value);
+    });
+
+    // Botão X para limpar o campo
+    clearSearchBtn.addEventListener('click', limparPesquisa);
+
+    // Ao carregar a página, verifica se veio uma busca de outra página (ex: index.html?q=ps5)
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCartBadge();
+      const params = new URLSearchParams(window.location.search);
+      const buscaUrl = params.get('q');
+      if (buscaUrl) {
+        searchInput.value = buscaUrl;
+        filtrarProdutos(buscaUrl);
+      }
+    });
   </script>
 </body>
 </html>
