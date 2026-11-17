@@ -66,7 +66,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse mt-3 mt-lg-0" id="navbarContent">
-          <!-- BARRA DE PESQUISA COM IDs -->
+          <!-- BARRA DE PESQUISA -->
           <form id="searchForm" class="d-flex mx-auto col-12 col-lg-5 my-2 my-lg-0" role="search">
             <div class="input-group">
               <input id="searchInput" class="form-control bg-dark text-white border-secondary" type="search" placeholder="Busque jogos, consoles, periféricos..." aria-label="Pesquisa" autocomplete="off">
@@ -103,7 +103,7 @@
   </header>
 
   <main class="container my-4 flex-grow-1">
-    <!-- AVISO DE RESULTADO DE PESQUISA (Aparece só quando há busca) -->
+    <!-- AVISO DE RESULTADO DE PESQUISA -->
     <div id="searchStatusBanner" class="d-none justify-content-between align-items-center bg-dark border border-secondary rounded p-3 mb-4">
       <div>
         <i class="bi bi-search text-danger me-2"></i>
@@ -121,6 +121,11 @@
       <p class="text-secondary">Não encontramos resultados para "<strong id="searchedTerm" class="text-danger"></strong>". Tente buscar por outro termo como <em>PS5</em>, <em>Teclado</em> ou <em>Zelda</em>.</p>
       <button onclick="limparPesquisa()" class="btn btn-action mt-2">Ver todos os produtos</button>
     </div>
+
+    <!-- GRADE UNIFICADA DE RESULTADOS DA PESQUISA -->
+    <section id="searchResultsSection" class="d-none mb-5">
+      <div id="searchResultsGrid" class="row g-3"></div>
+    </section>
 
     <!-- SEÇÃO BANNER -->
     <section id="heroSection" class="mb-5">
@@ -396,8 +401,8 @@
                 <p class="card-text text-secondary small mb-2">Teclados, Mouses</p>
               </div>
               <div>
-                <small class="text-secondary text-decoration-line-through d-block">R$ 2.099,00</small>
-                <span class="fs-5 fw-bold text-success d-block mb-3">R$ 1.826,00</span>
+                <small class="text-secondary text-decoration-line-through d-block">R$ 1.082,90</small>
+                <span class="fs-5 fw-bold text-success d-block mb-3">R$ 700,90</span>
                 <div class="d-grid gap-2">
                   <button onclick="addToCart(11, 'Teclado Gamer Mecânico (Oferta)', 700.90, 'Periférico', 'https://http2.mlstatic.com/D_Q_NP_2X_660385-MLB117250273565_092026-P.webp')" class="btn btn-action btn-sm">
                     <i class="bi bi-cart-plus me-1"></i> Adicionar
@@ -483,7 +488,7 @@
       new bootstrap.Toast(document.getElementById('cartToast'), { delay: 3000 }).show();
     }
 
-    // --- FUNÇÕES DA BARRA DE PESQUISA ---
+    // --- FUNÇÕES DA BARRA DE PESQUISA UNIFICADA ---
     const searchForm = document.getElementById('searchForm');
     const searchInput = document.getElementById('searchInput');
     const clearSearchBtn = document.getElementById('clearSearchBtn');
@@ -492,91 +497,82 @@
     const searchStatusText = document.getElementById('searchStatusText');
     const noResultsMessage = document.getElementById('noResultsMessage');
     const searchedTermSpan = document.getElementById('searchedTerm');
+    const searchResultsSection = document.getElementById('searchResultsSection');
+    const searchResultsGrid = document.getElementById('searchResultsGrid');
 
-    // Remove acentos e deixa tudo em minúsculo para facilitar a busca
     function normalizarTexto(texto) {
       return texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     }
 
     function filtrarProdutos(termoBruto) {
       const termo = normalizarTexto(termoBruto.trim());
-      const produtos = document.querySelectorAll('.product-item');
-      const secoes = document.querySelectorAll('.product-section');
-      let encontrados = 0;
+      const secoesOriginais = document.querySelectorAll('.product-section');
+      const todosProdutos = document.querySelectorAll('.product-section .product-item');
 
-      // Mostra/esconde botão 'X' dentro do input
-      if (termo.length > 0) {
-        clearSearchBtn.classList.remove('d-none');
-        heroSection.classList.add('d-none');
-      } else {
+      searchResultsGrid.innerHTML = '';
+
+      if (termo === '') {
         clearSearchBtn.classList.add('d-none');
         heroSection.classList.remove('d-none');
         searchStatusBanner.classList.add('d-none');
         searchStatusBanner.classList.remove('d-flex');
         noResultsMessage.classList.add('d-none');
+        searchResultsSection.classList.add('d-none');
+
+        secoesOriginais.forEach(secao => secao.classList.remove('d-none'));
+        return;
       }
 
-      // Filtra cada card de produto pelo título ou plataforma/categoria
-      produtos.forEach(card => {
+      clearSearchBtn.classList.remove('d-none');
+      heroSection.classList.add('d-none');
+      secoesOriginais.forEach(secao => secao.classList.add('d-none'));
+
+      let encontrados = 0;
+
+      todosProdutos.forEach(card => {
         const titulo = normalizarTexto(card.querySelector('.card-title').textContent);
         const categoria = normalizarTexto(card.querySelector('.card-text').textContent);
 
-        if (termo === '' || titulo.includes(termo) || categoria.includes(termo)) {
-          card.classList.remove('d-none');
+        if (titulo.includes(termo) || categoria.includes(termo)) {
+          const clone = card.cloneNode(true);
+          clone.classList.remove('d-none');
+          searchResultsGrid.appendChild(clone);
           encontrados++;
-        } else {
-          card.classList.add('d-none');
         }
       });
 
-      // Esconde seções que ficaram sem nenhum produto visível
-      secoes.forEach(secao => {
-        const visiveisNaSecao = secao.querySelectorAll('.product-item:not(.d-none)').length;
-        if (visiveisNaSecao === 0) {
-          secao.classList.add('d-none');
-        } else {
-          secao.classList.remove('d-none');
-        }
-      });
-
-      // Atualiza banners de status da busca
-      if (termo.length > 0) {
-        if (encontrados > 0) {
-          searchStatusBanner.classList.remove('d-none');
-          searchStatusBanner.classList.add('d-flex');
-          searchStatusText.textContent = `Mostrando ${encontrados} resultado(s) para "${termoBruto.trim()}"`;
-          noResultsMessage.classList.add('d-none');
-        } else {
-          searchStatusBanner.classList.add('d-none');
-          searchStatusBanner.classList.remove('d-flex');
-          searchedTermSpan.textContent = termoBruto.trim();
-          noResultsMessage.classList.remove('d-none');
-        }
+      if (encontrados > 0) {
+        searchStatusBanner.classList.remove('d-none');
+        searchStatusBanner.classList.add('d-flex');
+        searchStatusText.textContent = `Mostrando ${encontrados} resultado(s) para "${termoBruto.trim()}"`;
+        searchResultsSection.classList.remove('d-none');
+        noResultsMessage.classList.add('d-none');
+      } else {
+        searchStatusBanner.classList.add('d-none');
+        searchStatusBanner.classList.remove('d-flex');
+        searchResultsSection.classList.add('d-none');
+        searchedTermSpan.textContent = termoBruto.trim();
+        noResultsMessage.classList.remove('d-none');
       }
     }
 
     function limparPesquisa() {
       searchInput.value = '';
       filtrarProdutos('');
-      // Limpa o parâmetro ?q= da URL se existir
       window.history.replaceState({}, document.title, window.location.pathname);
     }
 
-    // Filtra em tempo real enquanto digita
     searchInput.addEventListener('input', (e) => {
       filtrarProdutos(e.target.value);
     });
 
-    // Impede recarregamento da página ao apertar Enter ou clicar na lupa
     searchForm.addEventListener('submit', (e) => {
       e.preventDefault();
       filtrarProdutos(searchInput.value);
     });
 
-    // Botão X para limpar o campo
     clearSearchBtn.addEventListener('click', limparPesquisa);
 
-    // Ao carregar a página, verifica se veio uma busca de outra página (ex: index.html?q=ps5)
     document.addEventListener('DOMContentLoaded', () => {
       updateCartBadge();
       const params = new URLSearchParams(window.location.search);
