@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GameStore - Ofertas</title>
+  <title>Vortex - Ofertas</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <style>
@@ -51,33 +51,34 @@
         <a href="index.html" class="navbar-brand d-flex align-items-center py-0">
           <img src="imagens/logo.png" alt="Vortex" style="height: 67px; width: auto; object-fit: contain;">
         </a>
-        <!-- No <head> -->
-        <title>Vortex - E-commerce de Jogos, Consoles e Periféricos</title>
-        <!-- No <footer> -->
-        <a class="navbar-brand brand-logo fs-4" href="index.html">
-          <i>VORTEX</i>
-        </a>
+
+        <!-- Botão menu mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Alternar navegação">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
         <div class="collapse navbar-collapse mt-3 mt-lg-0" id="navbarContent">
           <!-- Barra de Pesquisa -->
           <form id="searchForm" class="d-flex mx-auto col-12 col-lg-6 my-2 my-lg-0" role="search">
             <div class="input-group">
               <input id="searchInput" class="form-control bg-dark text-white border-secondary" type="search" placeholder="Busque Ofertas Imperdíveis..." aria-label="Pesquisa">
+              <button id="clearSearchBtn" class="btn btn-outline-secondary d-none" type="button" title="Limpar busca">
+                <i class="bi bi-x-lg"></i>
+              </button>
               <button class="btn btn-action" type="submit">
                 <i class="bi bi-search"></i>
               </button>
             </div>
           </form>
 
-          
-
-      <div class="d-flex gap-2">
-        <a href="index.html" class="btn btn-outline-light btn-sm">Início</a>
-        <a href="login.html" class="btn btn-outline-light btn-sm">Login</a>
-        <a href="cart.html" class="btn btn-action btn-sm"><i class="bi bi-cart3"></i> Carrinho</a>
+          <div class="d-flex gap-2 mt-2 mt-lg-0">
+            <a href="index.html" class="btn btn-outline-light btn-sm">Início</a>
+            <a href="login.html" class="btn btn-outline-light btn-sm">Login</a>
+            <a href="cart.html" class="btn btn-action btn-sm"><i class="bi bi-cart3"></i> Carrinho</a>
+          </div>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
   </header>
 
   <!-- CONTEÚDO PRINCIPAL -->
@@ -101,11 +102,9 @@
           <h6 class="text-white fw-bold">Mouse Logitech G Pro</h6>
           <small class="text-secondary text-decoration-line-through">R$ 899,90</small>
           <p class="fs-5 fw-bold text-success mb-3">R$ 649,90</p>
-          <div class="d-flex gap-3 flex-wrap align-items-center">
-            <button onclick="addDetailToCart(true)" class="btn btn-action btn-lg px-4 py-2 d-flex align-items-center gap-2">
-              <i class="bi bi-bag-check-fill fs-5"></i> Comprar Agora
-            </button>
-          </div>
+          <button onclick="adicionarOfertaAoCarrinho('oferta-1', 'Mouse Logitech G Pro', 649.90, 'Periféricos', 'imagens/mouse.jpeg')" class="btn btn-action w-100 mt-auto">
+            Comprar
+          </button>
         </div>
       </div>
 
@@ -117,7 +116,9 @@
           <h6 class="text-white fw-bold">Elden Ring</h6>
           <small class="text-secondary text-decoration-line-through">R$ 399,90</small>
           <p class="fs-5 fw-bold text-success mb-3">R$ 259,90</p>
-          <a href="cart.html" class="btn btn-action w-100 mt-auto">Comprar</a>
+          <button onclick="adicionarOfertaAoCarrinho('oferta-2', 'Elden Ring', 259.90, 'Jogos', 'imagens/eldenring.jpeg')" class="btn btn-action w-100 mt-auto">
+            Comprar
+          </button>
         </div>
       </div>
 
@@ -129,7 +130,9 @@
           <h6 class="text-white fw-bold">Cadeira Gamer ThunderX3</h6>
           <small class="text-secondary text-decoration-line-through">R$ 1.399,00</small>
           <p class="fs-5 fw-bold text-success mb-3">R$ 999,00</p>
-          <a href="cart.html" class="btn btn-action w-100 mt-auto">Comprar</a>
+          <button onclick="adicionarOfertaAoCarrinho('oferta-3', 'Cadeira Gamer ThunderX3', 999.00, 'Cadeiras', 'imagens/cadeira.jpg')" class="btn btn-action w-100 mt-auto">
+            Comprar
+          </button>
         </div>
       </div>
 
@@ -141,7 +144,9 @@
           <h6 class="text-white fw-bold">God of War Ragnarök</h6>
           <small class="text-secondary text-decoration-line-through">R$ 349,90</small>
           <p class="fs-5 fw-bold text-success mb-3">R$ 199,90</p>
-          <a href="cart.html" class="btn btn-action w-100 mt-auto">Comprar</a>
+          <button onclick="adicionarOfertaAoCarrinho('oferta-4', 'God of War Ragnarök', 199.90, 'Jogos', 'imagens/gow_ragnarok.jpg')" class="btn btn-action w-100 mt-auto">
+            Comprar
+          </button>
         </div>
       </div>
 
@@ -158,119 +163,114 @@
 
   <!-- RODAPÉ -->
   <footer class="py-3 text-center border-top border-secondary">
-    <small class="text-secondary">© 2026 GameStore. Todos os direitos reservados.</small>
+    <div class="container">
+      <a class="navbar-brand brand-logo fs-5 d-block mb-1" href="index.html">
+        <i>VORTEX</i>
+      </a>
+      <small class="text-secondary">© 2026 GameStore. Todos os direitos reservados.</small>
+    </div>
   </footer>
 
-  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="auth.js"></script>
   <script>
-  const searchForm = document.getElementById('searchForm');
-  const searchInput = document.getElementById('searchInput');
-  const clearSearchBtn = document.getElementById('clearSearchBtn');
-  const noResultsMessage = document.getElementById('noResultsMessage');
-  const searchedTermSpan = document.getElementById('searchedTerm');
-  
-  // Seleciona todas as colunas de produtos dentro da grade
-  const colunasProdutos = document.querySelectorAll('main .row .col-6');
+    // --- FUNÇÃO PARA ADICIONAR AO CARRINHO E IR PARA CART.HTML ---
+    function adicionarOfertaAoCarrinho(id, nome, preco, categoria, imagem) {
+      let cart = typeof getCart === 'function' ? getCart() : JSON.parse(localStorage.getItem('cart') || '[]');
 
-  function normalizarTexto(texto) {
-    return texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  }
-
-  function filtrarProdutos(termoBruto) {
-    const termo = normalizarTexto(termoBruto.trim());
-    let encontrados = 0;
-
-    // Mostra ou esconde o botão "X" de limpar
-    if (termo === '') {
-      clearSearchBtn.classList.add('d-none');
-    } else {
-      clearSearchBtn.classList.remove('d-none');
-    }
-
-    // Percorre cada card de produto
-    colunasProdutos.forEach(coluna => {
-      const tituloProduto = normalizarTexto(coluna.querySelector('h6').textContent);
-
-      if (tituloProduto.includes(termo)) {
-        coluna.classList.remove('d-none'); // Mostra o produto
-        encontrados++;
-      } else {
-        coluna.classList.add('d-none'); // Esconde o produto
-      }
-    });
-
-    // Controla a mensagem de "nenhum resultado"
-    if (encontrados === 0 && termo !== '') {
-      searchedTermSpan.textContent = termoBruto.trim();
-      noResultsMessage.classList.remove('d-none');
-    } else {
-      noResultsMessage.classList.add('d-none');
-    }
-  }
-
-  function limparPesquisa() {
-    searchInput.value = '';
-    filtrarProdutos('');
-    searchInput.focus();
-  }
-
-  // Filtra enquanto o usuário digita
-  searchInput.addEventListener('input', (e) => {
-    filtrarProdutos(e.target.value);
-  });
-
-  // Evita que a página recarregue ao apertar Enter ou clicar na lupa
-  searchForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    filtrarProdutos(searchInput.value);
-  });
-
-  // Botão X para limpar
-  clearSearchBtn.addEventListener('click', limparPesquisa);
-
-  // Mantém suporte caso venha uma busca pela URL (?q=mouse)
-  document.addEventListener('DOMContentLoaded', () => {
-    if (typeof updateCartBadge === 'function') {
-      updateCartBadge();
-    }
-    const params = new URLSearchParams(window.location.search);
-    const buscaUrl = params.get('q');
-    if (buscaUrl) {
-      searchInput.value = buscaUrl;
-      filtrarProdutos(buscaUrl);
-    }
-
-  function addDetailToCart(goToCart) {
-      const selectedOpt = document.querySelector('input[name="productOption"]:checked');
-      const optLabel = selectedOpt ? selectedOpt.value : '';
-      const fullName = optLabel ? `Monitor Gamer Redragon Ombra 32” (${optLabel})` : `Monitor Gamer Redragon Ombra 32”`;
-      const itemId = `3-${optLabel}`;
-
-      let cart = getCart();
-      const existingIndex = cart.findIndex(item => item.id === itemId);
+      const existingIndex = cart.findIndex(item => item.id === id);
       if (existingIndex > -1) {
         cart[existingIndex].qty += 1;
       } else {
         cart.push({
-          id: itemId,
-          name: fullName,
-          price: 2065.56,
-          category: 'Monitor',
-          image: 'https://static.wixstatic.com/media/71a6c2_4f397a972cca408ea36293284b3e848c~mv2.png/v1/fill/w_315,h_388,al_c,q_85,enc_avif,quality_auto/repetidor-ombra.png',
+          id: id,
+          name: nome,
+          price: preco,
+          category: categoria,
+          image: imagem,
           qty: 1
         });
       }
-      saveCart(cart);
 
-      if (goToCart) {
-        window.location.href = 'cart.html';
+      if (typeof saveCart === 'function') {
+        saveCart(cart);
       } else {
-        document.getElementById('toast-message').innerHTML = `<strong>${fullName}</strong> adicionado! <a href="cart.html" class="text-warning text-decoration-underline ms-1">Ver carrinho</a>`;
-        new bootstrap.Toast(document.getElementById('cartToast'), { delay: 3000 }).show();
+        localStorage.setItem('cart', JSON.stringify(cart));
+      }
+
+      window.location.href = 'cart.html';
+    }
+
+    // --- FUNÇÕES DA BARRA DE PESQUISA ---
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('searchInput');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
+    const noResultsMessage = document.getElementById('noResultsMessage');
+    const searchedTermSpan = document.getElementById('searchedTerm');
+    const colunasProdutos = document.querySelectorAll('main .row .col-6');
+
+    function normalizarTexto(texto) {
+      return texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+
+    function filtrarProdutos(termoBruto) {
+      const termo = normalizarTexto(termoBruto.trim());
+      let encontrados = 0;
+
+      if (termo === '') {
+        clearSearchBtn.classList.add('d-none');
+      } else {
+        clearSearchBtn.classList.remove('d-none');
+      }
+
+      colunasProdutos.forEach(coluna => {
+        const tituloProduto = normalizarTexto(coluna.querySelector('h6').textContent);
+
+        if (tituloProduto.includes(termo)) {
+          coluna.classList.remove('d-none');
+          encontrados++;
+        } else {
+          coluna.classList.add('d-none');
+        }
+      });
+
+      if (encontrados === 0 && termo !== '') {
+        searchedTermSpan.textContent = termoBruto.trim();
+        noResultsMessage.classList.remove('d-none');
+      } else {
+        noResultsMessage.classList.add('d-none');
       }
     }
-  });
-  document.addEventListener('DOMContentLoaded', updateCartBadge);
-</script>
+
+    function limparPesquisa() {
+      searchInput.value = '';
+      filtrarProdutos('');
+      searchInput.focus();
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    searchInput.addEventListener('input', (e) => {
+      filtrarProdutos(e.target.value);
+    });
+
+    searchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      filtrarProdutos(searchInput.value);
+    });
+
+    clearSearchBtn.addEventListener('click', limparPesquisa);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof updateCartBadge === 'function') {
+        updateCartBadge();
+      }
+      const params = new URLSearchParams(window.location.search);
+      const buscaUrl = params.get('q');
+      if (buscaUrl) {
+        searchInput.value = buscaUrl;
+        filtrarProdutos(buscaUrl);
+      }
+    });
+  </script>
 </body>
 </html>
