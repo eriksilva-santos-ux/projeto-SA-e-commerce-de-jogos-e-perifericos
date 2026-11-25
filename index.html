@@ -496,7 +496,6 @@
     // --- FUNÇÕES DA BARRA DE PESQUISA UNIFICADA ---
     const searchForm = document.getElementById('searchForm');
     const searchInput = document.getElementById('searchInput');
-    const clearSearchBtn = document.getElementById('clearSearchBtn');
     const heroSection = document.getElementById('heroSection');
     const searchStatusBanner = document.getElementById('searchStatusBanner');
     const searchStatusText = document.getElementById('searchStatusText');
@@ -512,12 +511,13 @@
     function filtrarProdutos(termoBruto) {
       const termo = normalizarTexto(termoBruto.trim());
       const secoesOriginais = document.querySelectorAll('.product-section');
-      const todosProdutos = document.querySelectorAll('.product-section');
+      const todosProdutos = document.querySelectorAll('.product-section .col-6');
+
+      console.log(todosProdutos.length);
 
       searchResultsGrid.innerHTML = '';
 
       if (termo === '') {
-        clearSearchBtn.classList.add('d-none');
         heroSection.classList.remove('d-none');
         searchStatusBanner.classList.add('d-none');
         searchStatusBanner.classList.remove('d-flex');
@@ -528,7 +528,6 @@
         return;
       }
 
-      clearSearchBtn.classList.remove('d-none');
       heroSection.classList.add('d-none');
       secoesOriginais.forEach(secao => secao.classList.add('d-none'));
 
@@ -575,8 +574,6 @@
       e.preventDefault();
       filtrarProdutos(searchInput.value);
     });
-
-    clearSearchBtn.addEventListener('click', limparPesquisa);
 
     document.addEventListener('DOMContentLoaded', () => {
       updateCartBadge();
