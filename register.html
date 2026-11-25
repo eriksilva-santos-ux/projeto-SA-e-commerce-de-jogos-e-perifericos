@@ -106,7 +106,7 @@
             <h3 class="fw-bold text-white text-center mb-1">Crie sua conta</h3>
             <p class="text-secondary text-center small mb-4">Preencha os campos abaixo para começar suas compras.</p>
 
-            <form action="#" method="POST">
+            <form id="registerForm" action="#" method="POST">
               <div class="row g-3">
                 <!-- Nome Completo -->
                 <div class="col-12 col-md-6">
@@ -122,7 +122,7 @@
                   <label for="cpf" class="form-label text-secondary small fw-semibold">CPF</label>
                   <div class="input-group">
                     <span class="input-group-text bg-dark border-secondary text-secondary"><i class="bi bi-card-text"></i></span>
-                    <input type="text" class="form-control bg-dark text-white border-secondary" id="cpf" placeholder="000.000.000-00" required>
+                    <input type="text" class="form-control bg-dark text-white border-secondary" id="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" minlength="14" maxlength="14" placeholder="000.000.000-00" required>
                   </div>
                 </div>
 
@@ -199,5 +199,36 @@
 
   <!-- Bootstrap 5.3 JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const registerForm = document.getElementById('registerForm');
+    const fullName = document.getElementById('fullName');
+    const cpf = document.getElementById('cpf');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const terms = document.getElementById('terms');
+
+    registerForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      if (password.value !== confirmPassword.value) {
+        alert('As senhas não são iguais. Por favor, tente novamente.');
+        return;
+      } 
+      
+      alert('Conta criada com sucesso! ' + fullName.value + '!')
+      window.location.href = 'login.html';
+    });
+    cpf.addEventListener('input', function(event) {
+      let valor = event.target.value.replace(/\D/g, '');
+      
+      valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
+      valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
+      valor = valor.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+
+      event.target.value = valor;
+    })
+  
+  </script>
 </body>
 </html>
