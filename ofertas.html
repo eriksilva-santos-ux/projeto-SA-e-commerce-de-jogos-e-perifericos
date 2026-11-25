@@ -216,7 +216,6 @@
     // --- FUNÇÕES DA BARRA DE PESQUISA ---
     const searchForm = document.getElementById('searchForm');
     const searchInput = document.getElementById('searchInput');
-    const clearSearchBtn = document.getElementById('clearSearchBtn');
     const noResultsMessage = document.getElementById('noResultsMessage');
     const searchedTermSpan = document.getElementById('searchedTerm');
     const colunasProdutos = document.querySelectorAll('main .row .col-6');
@@ -228,12 +227,6 @@
     function filtrarProdutos(termoBruto) {
       const termo = normalizarTexto(termoBruto.trim());
       let encontrados = 0;
-
-      if (termo === '') {
-        clearSearchBtn.classList.add('d-none');
-      } else {
-        clearSearchBtn.classList.remove('d-none');
-      }
 
       colunasProdutos.forEach(coluna => {
         const tituloProduto = normalizarTexto(coluna.querySelector('h6').textContent);
@@ -270,7 +263,6 @@
       filtrarProdutos(searchInput.value);
     });
 
-    clearSearchBtn.addEventListener('click', limparPesquisa);
 
     document.addEventListener('DOMContentLoaded', () => {
       if (typeof updateCartBadge === 'function') {
