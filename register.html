@@ -215,6 +215,11 @@
         alert('As senhas não são iguais. Por favor, tente novamente.');
         return;
       } 
+      localStorage.setItem('fullName', fullName.value);
+      localStorage.setItem('cpf', cpf.value);
+      localStorage.setItem('email', email.value);
+      localStorage.setItem('password', password.value);
+      localStorage.setItem('confirmPassword', confirmPassword.value);
       
       alert('Conta criada com sucesso! ' + fullName.value + '!')
       window.location.href = 'login.html';
