@@ -3,15 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GameStore - Entrar na Conta</title>
-  <!-- Bootstrap 5.3-->
+  <title>Vortex - Entrar na Conta</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap Icos -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <style>
+    :root {
+      --bg-main: #0b0e14;
+      --bg-surface: #121620;
+      --bg-input: #181d2a;
+      --accent-pink: #ff0055;
+      --accent-pink-hover: #d90048;
+      --border-subtle: #2d3748;
+      --text-main: #e1e1e6;
+      --text-muted: #94a3b8;
+    }
     body {
-      background-color: #0b0e14;
-      color: #e1e1e6;
+      background-color: var(--bg-main);
+      color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -38,13 +46,48 @@
       transform: translateY(-2px);
     }
     .auth-card {
-      background-color: #121620;
-      border: 1px solid #2d3748;
-      border-radius: 12px;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .input-group-text-custom {
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-right: none;
+      color: var(--text-muted);
+    }
+    .form-control-custom {
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      color: #fff;
+    }
+    .form-control-custom::placeholder { color: #64748b; }
+    .form-control-custom:focus {
+      background-color: var(--bg-input);
+      color: #fff;
+      border-color: var(--accent-pink);
+      box-shadow: 0 0 0 0.2rem rgba(255, 0, 85, 0.2);
+    }
+    .input-group:focus-within .input-group-text-custom {
+      border-color: var(--accent-pink);
+      color: var(--accent-pink);
+    }
+    .form-check-input:checked {
+      background-color: var(--accent-pink);
+      border-color: var(--accent-pink);
+    }
+    .link-accent {
+      color: var(--accent-pink);
+      text-decoration: none;
+    }
+    .link-accent:hover {
+      color: var(--accent-pink-hover);
+      text-decoration: underline;
     }
     footer {
-      background-color: #121620;
-      border-top: 1px solid #2d3748;
+      background-color: var(--bg-surface);
+      border-top: 1px solid var(--border-subtle);
     }
   </style>
 </head>
@@ -54,47 +97,32 @@
   <header class="sticky-top">
     <nav class="navbar navbar-expand-lg navbar-dark py-3">
       <div class="container">
-        <!-- Logo -->
         <a href="index.html" class="navbar-brand d-flex align-items-center py-0">
           <img src="imagens/logo.png" alt="Vortex" style="height: 67px; width: auto; object-fit: contain;">
-        </a>
-        <title>Vortex - E-commerce de Jogos, Consoles e Periféricos</title>
-        <!-- No <footer> -->
-        <a class="navbar-brand brand-logo fs-4" href="index.html">
-          <i>VORTEX</i>
+          <span class="brand-logo fs-4"><i>VORTEX</i></span>
         </a>
 
-        <!-- Botão Toggle Mobile -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
           <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse mt-3 mt-lg-0" id="navbarContent">
-          <!-- Barra de Pesquisa -->
-          <form class="d-flex mx-auto col-12 col-lg-6 my-2 my-lg-0" role="search">
-            <div class="input-group">
-              <input class="form-control bg-dark text-white border-secondary" type="search" placeholder="Busque jogos, consoles, periféricos..." aria-label="Pesquisa">
-              <button class="btn btn-action" type="submit">
-                <i class="bi bi-search"></i>
-              </button>
-            </div>
-          </form>
-
-          <a href="index.html" class="btn btn-outline-light btn-sm text-nowrap">
-              <i class="bi bi-house-door"></i> início
+          <div id="navUserActions" class="d-flex align-items-center gap-2 mt-2 mt-lg-0 ms-auto">
+            <a href="index.html" class="btn btn-outline-light btn-sm text-nowrap">
+              <i class="bi bi-house-door"></i> Início
             </a>
-
             <a href="register.html" class="btn btn-outline-light btn-sm text-nowrap">
               <i class="bi bi-person-plus"></i> Cadastro
             </a>
-            <a href="login.html" class="btn btn-outline-light btn-sm text-nowrap">
+            <a href="acesso.html" class="btn btn-outline-light btn-sm text-nowrap">
+              <i class="bi bi-person-lock"></i> Acesso Restrito
+            </a>
+            <a href="login.html" class="btn btn-outline-light active btn-sm text-nowrap">
               <i class="bi bi-box-arrow-in-right"></i> Login
             </a>
             <a href="cart.html" class="btn btn-action btn-sm text-nowrap position-relative">
               <i class="bi bi-cart3"></i> Carrinho
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark">
-                0
-              </span>
+              <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark">0</span>
             </a>
           </div>
         </div>
@@ -102,11 +130,11 @@
     </nav>
   </header>
 
-  <!-- CONTEÚDO PRINCIPAL - FORMULÁRIO DE LOGIN -->
+  <!-- CONTEÚDO PRINCIPAL -->
   <main class="container my-5 flex-grow-1 d-flex align-items-center justify-content-center">
     <div class="row w-100 justify-content-center">
       <div class="col-12 col-md-8 col-lg-5">
-        <div class="card auth-card shadow p-4">
+        <div class="card auth-card p-3 p-sm-4">
           <div class="card-body">
             <h3 class="fw-bold text-white text-center mb-1">Acesse sua conta</h3>
             <p class="text-secondary text-center small mb-4">Entre para gerenciar seus pedidos e salvar favoritos.</p>
@@ -116,8 +144,8 @@
               <div class="mb-3">
                 <label for="email" class="form-label text-secondary small fw-semibold">E-mail</label>
                 <div class="input-group">
-                  <span class="input-group-text bg-dark border-secondary text-secondary"><i class="bi bi-envelope"></i></span>
-                  <input type="email" class="form-control bg-dark text-white border-secondary" id="email" placeholder="seu@email.com" required>
+                  <span class="input-group-text input-group-text-custom"><i class="bi bi-envelope"></i></span>
+                  <input type="email" class="form-control form-control-custom" id="email" placeholder="seu@email.com" required>
                 </div>
               </div>
 
@@ -125,33 +153,32 @@
               <div class="mb-3">
                 <div class="d-flex justify-content-between align-items-center mb-1">
                   <label for="password" class="form-label text-secondary small fw-semibold mb-0">Senha</label>
-                  <a href="#" class="small text-danger text-decoration-none">Esqueceu a senha?</a>
+                  <a href="#" class="small link-accent">Esqueceu a senha?</a>
                 </div>
                 <div class="input-group">
-                  <span class="input-group-text bg-dark border-secondary text-secondary"><i class="bi bi-lock"></i></span>
-                  <input type="password" class="form-control bg-dark text-white border-secondary" id="password" placeholder="12345..." required>
+                  <span class="input-group-text input-group-text-custom"><i class="bi bi-lock"></i></span>
+                  <input type="password" class="form-control form-control-custom" id="password" placeholder="••••••••" required>
                 </div>
               </div>
 
               <!-- Lembrar de mim -->
               <div class="form-check mb-4">
                 <input class="form-check-input bg-dark border-secondary" type="checkbox" id="rememberMe">
-                <label class="form-check-input-label text-secondary small" for="rememberMe">
+                <label class="form-check-label text-secondary small" for="rememberMe">
                   Lembrar dos meus dados neste dispositivo
                 </label>
               </div>
 
               <!-- Botão Entrar -->
-              <button type="submit" class="btn btn-action w-100 py-2 mb-3">
+              <button type="submit" class="btn btn-action w-100 py-2">
                 <i class="bi bi-box-arrow-in-right me-2"></i> Entrar
               </button>
             </form>
 
             <hr class="border-secondary my-4">
 
-            <!-- Link de navegação para cadastro -->
             <p class="text-center text-secondary small mb-0">
-              Ainda não tem uma conta? <a href="register.html" class="text-danger fw-semibold text-decoration-none">Cadastre-se</a>
+              Ainda não tem uma conta? <a href="register.html" class="link-accent fw-semibold">Cadastre-se</a>
             </p>
           </div>
         </div>
@@ -159,32 +186,25 @@
     </div>
   </main>
 
-  <!-- FOOTER / RODAPÉ -->
+  <!-- FOOTER -->
   <footer class="py-4 mt-auto">
-    <div class="container">
-      <div class="row align-items-center gy-3">
-        <div class="col-md-12 text-center">
-          <p class="text-secondary small mb-0">
-            © 2026 GameStore. Todos os direitos reservados. Termos de Direitos Autorais.
-          </p>
-        </div>
-      </div>
+    <div class="container text-center">
+      <p class="text-secondary small mb-0">
+        © 2026 Vortex. Todos os direitos reservados. Termos de Direitos Autorais.
+      </p>
     </div>
   </footer>
 
-  <!-- Bootstrap 5.3 JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     const loginForm = document.getElementById('loginForm');
     const email = document.getElementById('email');
     const password = document.getElementById('password');
-    const rememberMe = document.getElementById('rememberMe');
 
     loginForm.addEventListener('submit', function(event) {
       event.preventDefault();
 
       const storedFullName = localStorage.getItem('fullName');
-      const storedCPF = localStorage.getItem('cpf');
       const storedEmail = localStorage.getItem('email');
       const storedPassword = localStorage.getItem('password');
 
@@ -193,7 +213,7 @@
         return;
       }
 
-      alert('Login realizado com sucesso! Bem-vindo(a),' + storedFullName + '!');
+      alert('Login realizado com sucesso! Bem-vindo(a), ' + storedFullName + '!');
       window.location.href = 'index.html';
     });
   </script>
