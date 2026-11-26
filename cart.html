@@ -89,29 +89,29 @@
   <header class="sticky-top">
     <nav class="navbar navbar-expand-lg navbar-dark py-3">
       <div class="container">
+        <!-- Logo -->
         <a href="index.html" class="navbar-brand d-flex align-items-center py-0">
-          <img src="imagens/logo.png" alt="Vortex" style="height: 67px; width: auto; object-fit: contain;">
+          <img src="imagens/logo.png" alt="Vortex" style="height: 67px; width: auto; object-fit: contain;" onerror="this.style.display='none'">
         </a>
-       
-        <a class="navbar-brand brand-logo fs-4" href="index.html">
-          <i>VORTEX</i>
+
+        <a class="navbar-brand brand-logo fs-4 fst-italic" href="index.html">
+          VORTEX
         </a>
 
         <!-- Botão Toggle Mobile -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Abrir menu">
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse mt-3 mt-lg-0" id="navbarContent">
+        <div class="collapse navbar-collapse" id="navbarContent">
+          <!-- Ações de Usuário -->
           <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0 ms-auto">
             <a href="index.html" class="btn btn-outline-light btn-sm text-nowrap">
               <i class="bi bi-house-door"></i> Início
             </a>
             <a href="register.html" class="btn btn-outline-light btn-sm text-nowrap">
               <i class="bi bi-person-plus"></i> Cadastro
-            </a>
-            <a href="acesso.html" class="btn btn-outline-light btn-sm text-nowrap">
-              <i class="bi bi-person-lock"></i> Acesso Restrito
             </a>
             <a href="login.html" class="btn btn-outline-light btn-sm text-nowrap">
               <i class="bi bi-box-arrow-in-right"></i> Login
@@ -143,7 +143,9 @@
 
         <!-- CARD PRODUTOS -->
         <div class="card card-custom p-3 p-md-4 shadow mb-4">
-          <div id="cart-content"></div>
+          <div id="cart-content">
+            <!-- Tabela preenchida via JavaScript -->
+          </div>
 
           <!-- Cupom de Desconto e Voltar -->
           <div id="cart-actions" class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4 pt-3 border-top border-secondary gap-3">
@@ -166,7 +168,7 @@
           </h5>
 
           <!-- Opções de Seleção -->
-          <div class="row g-3 mb-4">
+          <div class="row g-3 mb-4" role="radiogroup" aria-label="Forma de pagamento">
             <div class="col-md-4">
               <div class="payment-option p-3 h-100 active" role="radio" aria-checked="true" tabindex="0" onclick="selectPayment('pix', this)">
                 <div class="d-flex align-items-center justify-content-between mb-1">
@@ -197,7 +199,7 @@
             </div>
           </div>
 
-          <!-- PIX -->
+          <!-- Detalhes Dinâmicos: PIX -->
           <div id="panel-pix" class="payment-panel bg-dark p-3 rounded border border-secondary">
             <div class="d-flex align-items-center gap-3">
               <i class="bi bi-qr-code display-4 text-success"></i>
@@ -210,7 +212,7 @@
             </div>
           </div>
 
-          <!-- CARTÃO -->
+          <!-- Detalhes Dinâmicos: CARTÃO DE CRÉDITO -->
           <div id="panel-credit" class="payment-panel bg-dark p-3 rounded border border-secondary d-none">
             <div class="row g-3">
               <div class="col-12">
@@ -233,14 +235,14 @@
                 <input type="text" id="cc-cvv" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="123" maxlength="4" inputmode="numeric" autocomplete="cc-csc">
               </div>
               <div class="col-12 col-md-4">
-                <label class="form-label small text-secondary">Parcelamento</label>
+                <label for="cc-installments" class="form-label small text-secondary">Parcelamento</label>
                 <select id="cc-installments" class="form-select form-select-sm bg-dark text-white border-secondary">
                 </select>
               </div>
             </div>
           </div>
 
-          <!-- BOLETO -->
+          <!-- Detalhes Dinâmicos: BOLETO -->
           <div id="panel-boleto" class="payment-panel bg-dark p-3 rounded border border-secondary d-none">
             <div class="d-flex align-items-center gap-3">
               <i class="bi bi-file-earmark-text display-4 text-warning"></i>
@@ -260,7 +262,7 @@
       <div class="col-12 col-lg-4">
         <div class="card card-custom p-4 shadow sticky-lg-top" style="top: 115px;">
           <h5 class="fw-bold text-white mb-3">Resumo do Pedido</h5>
-          
+
           <!-- Cálculo de Frete -->
           <div class="mb-3">
             <label for="cep-input" class="form-label small text-secondary">Calcular Frete (CEP)</label>
@@ -331,7 +333,8 @@
           </h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
         </div>
-        <div class="modal-body text-center py-4" id="modal-order-body"></div>
+        <div class="modal-body text-center py-4" id="modal-order-body">
+        </div>
         <div class="modal-footer border-secondary">
           <a href="index.html" class="btn btn-action w-100">Voltar para a Loja</a>
         </div>
@@ -339,16 +342,11 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
+  <!-- FOOTER / RODAPÉ -->
   <footer class="py-4 mt-auto">
     <div class="container">
       <div class="row align-items-center gy-3">
-        <div class="col-md-6 text-center text-md-start">
-          <a class="navbar-brand brand-logo fs-4" href="index.html">
-            <i>VORTEX</i>
-          </a>
-        </div>
-        <div class="col-md-6 text-center text-md-end">
+        <div class="col-md-12 text-center">
           <p class="text-secondary small mb-0">
             © 2026 Vortex. Todos os direitos reservados. Termos de Direitos Autorais.
           </p>
@@ -360,7 +358,14 @@
   <!-- Bootstrap 5.3 JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+  <!-- SCRIPT DO CARRINHO E PAGAMENTO -->
   <script>
+    const CART_KEY = 'gamestore_cart';
+    const ORDERS_KEY = 'gamestore_orders';
+    const FREE_SHIPPING_MIN = 300;
+    const SHIPPING_PRICE = 24.90;
+    const MAX_QTY = 99;
+
     let currentPayment = 'pix';
     let cepValid = false;
     let couponDiscountRate = 0;
@@ -399,23 +404,31 @@
 
     /* ---------- Carrinho ---------- */
     function getCart() {
-      return JSON.parse(localStorage.getItem('gamestore_cart')) || [];
+      return readStorage(CART_KEY)
+        .map(item => ({
+          name: String(item?.name ?? 'Produto'),
+          category: String(item?.category ?? ''),
+          image: String(item?.image ?? ''),
+          price: Number(item?.price),
+          qty: Math.min(MAX_QTY, Math.floor(Number(item?.qty)))
+        }))
+        .filter(item => Number.isFinite(item.price) && item.price >= 0 && item.qty >= 1);
     }
 
     function saveCart(cart) {
-      localStorage.setItem('gamestore_cart', JSON.stringify(cart));
+      writeStorage(CART_KEY, cart);
       renderCart();
     }
 
     function getOrders() {
-      return JSON.parse(localStorage.getItem('gamestore_orders')) || [];
+      return readStorage(ORDERS_KEY);
     }
 
     function updateQty(index, delta) {
       const cart = getCart();
       if (!cart[index]) return;
 
-      cart[index].qty += delta;
+      cart[index].qty = Math.min(MAX_QTY, cart[index].qty + delta);
       if (cart[index].qty <= 0) {
         cart.splice(index, 1);
       }
@@ -429,7 +442,9 @@
     }
 
     function clearCart() {
-      localStorage.removeItem('gamestore_cart');
+      if (!confirm('Deseja realmente esvaziar o carrinho?')) return;
+      localStorage.removeItem(CART_KEY);
+      resetCheckoutState();
       renderCart();
     }
 
@@ -470,21 +485,21 @@
         return;
       }
 
-      const cart = getCart();
-      const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
-
-      if (subtotal >= 300) {
-        shippingCost = 0;
-        feedback.className = 'text-success d-block mt-1';
-        feedback.innerText = 'Frete Grátis ativado (pedidos acima de R$ 300)!';
-      } else {
-        shippingCost = 24.90;
-        feedback.className = 'text-info d-block mt-1';
-        feedback.innerText = 'Entrega Expressa: 2 a 4 dias úteis.';
-      }
-      updateSummary();
+      cepValid = true;
+      updateSummary(); // o frete é recalculado sempre que o resumo muda
     }
 
+    function getCartSubtotal(cart) {
+      return r2(cart.reduce((acc, item) => acc + item.price * item.qty, 0));
+    }
+
+    // null = ainda não calculado
+    function getShippingCost(subtotal) {
+      if (!cepValid || subtotal <= 0) return null;
+      return subtotal >= FREE_SHIPPING_MIN ? 0 : SHIPPING_PRICE;
+    }
+
+    /* ---------- Cupom ---------- */
     function applyCoupon() {
       const code = document.getElementById('coupon-input').value.trim().toUpperCase();
       const feedback = document.getElementById('coupon-feedback');
@@ -506,6 +521,7 @@
       const cart = getCart();
       const container = document.getElementById('cart-content');
       const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+      const isEmpty = cart.length === 0;
 
       document.getElementById('cart-badge').innerText = totalItems;
       document.getElementById('btn-clear-cart').classList.toggle('d-none', isEmpty);
@@ -527,41 +543,33 @@
         return;
       }
 
-      document.getElementById('btn-clear-cart').classList.remove('d-none');
-      document.getElementById('payment-section').classList.remove('d-none');
-      document.getElementById('btn-checkout').disabled = false;
-
-      let rowsHTML = '';
-      cart.forEach((item, index) => {
-        const itemSubtotal = item.price * item.qty;
-        rowsHTML += `
-          <tr>
-            <td>
-              <div class="d-flex align-items-center gap-3">
-                <img src="${item.image}" onerror="this.src='https://placehold.co/64x64/121620/ff0055?text=Game'" class="img-product-thumb" alt="${item.name}">
-                <div>
-                  <h6 class="mb-0 text-white fw-bold small">${item.name}</h6>
-                  <span class="badge bg-secondary small mt-1">${item.category}</span>
-                </div>
+      const rowsHTML = cart.map((item, index) => `
+        <tr>
+          <td>
+            <div class="d-flex align-items-center gap-3">
+              <img src="${esc(item.image)}" onerror="this.onerror=null;this.src='https://placehold.co/64x64/121620/ff0055?text=Game'" class="img-product-thumb" alt="${esc(item.name)}">
+              <div>
+                <h6 class="mb-0 text-white fw-bold small">${esc(item.name)}</h6>
+                ${item.category ? `<span class="badge bg-secondary small mt-1">${esc(item.category)}</span>` : ''}
               </div>
-            </td>
-            <td class="text-center text-nowrap">${formatBRL(item.price)}</td>
-            <td>
-              <div class="input-group input-group-sm mx-auto" style="max-width: 105px;">
-                <button onclick="updateQty(${index}, -1)" class="btn btn-outline-secondary text-white" type="button">-</button>
-                <input type="text" class="form-control bg-dark text-white text-center border-secondary" value="${item.qty}" readonly>
-                <button onclick="updateQty(${index}, 1)" class="btn btn-outline-secondary text-white" type="button">+</button>
-              </div>
-            </td>
-            <td class="text-end fw-bold text-nowrap">${formatBRL(itemSubtotal)}</td>
-            <td class="text-center">
-              <button onclick="removeItem(${index})" class="btn btn-sm btn-outline-danger border-0" title="Remover item">
-                <i class="bi bi-trash fs-5"></i>
-              </button>
-            </td>
-          </tr>
-        `;
-      });
+            </div>
+          </td>
+          <td class="text-center text-nowrap">${formatBRL(item.price)}</td>
+          <td>
+            <div class="input-group input-group-sm mx-auto" style="max-width: 105px;">
+              <button onclick="updateQty(${index}, -1)" class="btn btn-outline-secondary text-white" type="button" aria-label="Diminuir quantidade">-</button>
+              <input type="text" class="form-control bg-dark text-white text-center border-secondary" value="${item.qty}" readonly aria-label="Quantidade">
+              <button onclick="updateQty(${index}, 1)" class="btn btn-outline-secondary text-white" type="button" aria-label="Aumentar quantidade">+</button>
+            </div>
+          </td>
+          <td class="text-end fw-bold text-nowrap">${formatBRL(item.price * item.qty)}</td>
+          <td class="text-center">
+            <button onclick="removeItem(${index})" class="btn btn-sm btn-outline-danger border-0" title="Remover item" aria-label="Remover item">
+              <i class="bi bi-trash fs-5"></i>
+            </button>
+          </td>
+        </tr>
+      `).join('');
 
       container.innerHTML = `
         <div class="table-responsive">
@@ -585,7 +593,7 @@
 
     function updateSummary() {
       const cart = getCart();
-      const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+      const subtotal = getCartSubtotal(cart);
 
       document.getElementById('summary-subtotal').innerText = formatBRL(subtotal);
 
@@ -668,21 +676,26 @@
         return;
       }
 
-      container.innerHTML = orders.map(order => `
-        <div class="card card-custom p-3 mb-3">
-          <div class="d-flex justify-content-between flex-wrap gap-2 mb-2">
-            <strong>Pedido #${order.number}</strong>
-            <small class="text-secondary">${order.date}</small>
+      container.innerHTML = orders.map(order => {
+        const items = Array.isArray(order.items) ? order.items : [];
+        const installments = order.payment === 'credit' && order.installments > 1
+          ? ` (${esc(order.installments)}x)` : '';
+        return `
+          <div class="card card-custom p-3 mb-3">
+            <div class="d-flex justify-content-between flex-wrap gap-2 mb-2">
+              <strong>Pedido #${esc(order.number)}</strong>
+              <small class="text-secondary">${esc(order.date)}</small>
+            </div>
+            <ul class="small text-secondary mb-2 ps-3">
+              ${items.map(i => `<li>${esc(i.qty)}x ${esc(i.name)}</li>`).join('')}
+            </ul>
+            <div class="d-flex justify-content-between">
+              <span class="badge bg-secondary">${esc(paymentNames[order.payment] || order.payment)}${installments}</span>
+              <strong class="text-danger">${formatBRL(order.total)}</strong>
+            </div>
           </div>
-          <ul class="small text-secondary mb-2 ps-3">
-            ${order.items.map(i => `<li>${i.qty}x ${i.name}</li>`).join('')}
-          </ul>
-          <div class="d-flex justify-content-between">
-            <span class="badge bg-secondary">${paymentNames[order.payment] || order.payment}</span>
-            <strong class="text-danger">${formatBRL(order.total)}</strong>
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     /* ---------- Validação do cartão ---------- */
@@ -770,17 +783,17 @@
         : 1;
       const modalBody = document.getElementById('modal-order-body');
 
-      // Monta e salva o pedido no histórico (antes de limpar o carrinho)
-      const order = {
+      // Salva o pedido no histórico (antes de limpar o carrinho)
+      const orders = getOrders();
+      orders.push({
         number: orderNumber,
         date: new Date().toLocaleString('pt-BR'),
         items: cart,
         payment: currentPayment,
-        total: currentTotal
-      };
-      const orders = getOrders();
-      orders.push(order);
-      localStorage.setItem('gamestore_orders', JSON.stringify(orders));
+        installments: installments,
+        total: total
+      });
+      writeStorage(ORDERS_KEY, orders);
 
       if (currentPayment === 'pix') {
         modalBody.innerHTML = `
@@ -788,8 +801,8 @@
           <i class="bi bi-qr-code display-1 text-white my-3 d-block"></i>
           <p class="small text-secondary mb-2">Escaneie o QR Code acima ou copie a chave PIX abaixo para pagar <strong>${totalPaid}</strong>:</p>
           <div class="input-group input-group-sm mb-3">
-            <input type="text" class="form-control bg-secondary text-white border-0" value="00020126580014BR.GOV.BCB.PIX0136gamestore-pagamentos-2026" readonly>
-            <button class="btn btn-outline-light" onclick="alert('Chave PIX copiada!')">Copiar</button>
+            <input id="pix-key" type="text" class="form-control bg-secondary text-white border-0" value="00020126580014BR.GOV.BCB.PIX0136vortex-pagamentos-2026" readonly>
+            <button class="btn btn-outline-light" type="button" onclick="copyPix(this)">Copiar</button>
           </div>
         `;
       } else if (currentPayment === 'credit') {
@@ -809,7 +822,10 @@
         `;
       }
 
-      localStorage.removeItem('gamestore_cart');
+      // Limpa carrinho e estado do checkout (cupom, CEP e dados do cartão)
+      localStorage.removeItem(CART_KEY);
+      ['cc-number', 'cc-name', 'cc-exp', 'cc-cvv'].forEach(id => { document.getElementById(id).value = ''; });
+      resetCheckoutState();
       renderCart();
       renderHistory();
 
@@ -826,11 +842,37 @@
     document.getElementById('cc-cvv').addEventListener('input', function (e) {
       e.target.value = e.target.value.replace(/\D/g, '');
     });
-    document.getElementById('cep-input')?.addEventListener('input', function (e) {
-      e.target.value = e.target.value.replace(/\D/g, '').replace(/(\d{5})(?=\d)/g, '$1-');
+    document.getElementById('cep-input').addEventListener('input', function (e) {
+      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 8).replace(/(\d{5})(?=\d)/g, '$1-');
+      cepValid = false; // alterou o CEP: precisa confirmar de novo
+      updateSummary();
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
+    // Enter nos campos de CEP e cupom
+    document.getElementById('cep-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); calculateShipping(); }
+    });
+    document.getElementById('coupon-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); applyCoupon(); }
+    });
+
+    // Acessibilidade: seleciona forma de pagamento com Enter/Espaço
+    document.querySelectorAll('.payment-option').forEach(el => {
+      el.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          el.click();
+        }
+      });
+    });
+
+    // Sincroniza se o carrinho/pedidos mudarem em outra aba
+    window.addEventListener('storage', e => {
+      if (e.key === CART_KEY) renderCart();
+      if (e.key === ORDERS_KEY) renderHistory();
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
       renderCart();
       renderHistory();
     });
