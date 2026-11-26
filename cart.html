@@ -294,6 +294,14 @@
         </div>
       </div>
     </div>
+
+    <!-- HISTÓRICO DE COMPRAS -->
+    <div class="mt-5 pt-4 border-top border-secondary">
+      <h4 class="fw-bold text-white mb-4 border-start border-4 border-danger ps-2">
+        <i class="bi bi-clock-history text-danger me-2"></i>Histórico de Compras
+      </h4>
+      <div id="history-content"></div>
+    </div>
   </main>
 
   <!-- MODAL DE CONFIRMAÇÃO DE PEDIDO -->
@@ -337,9 +345,11 @@
 
   <script>
     const CART_KEY = 'vortex_cart';
+    const ORDERS_KEY = 'vortex_orders';
     let currentPayment = 'pix';
     let shippingCost = 0;
     let couponDiscountRate = 0;
+    let currentTotal = 0;
 
     function formatBRL(value) {
       return Number(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -354,10 +364,14 @@
       renderCart();
     }
 
+    function getOrders() {
+      return JSON.parse(localStorage.getItem(ORDERS_KEY)) || [];
+    }
+
     function updateQty(index, delta) {
       let cart = getCart();
       if (!cart[index]) return;
-      
+
       cart[index].qty = (cart[index].qty || 1) + delta;
       if (cart[index].qty <= 0) {
         cart.splice(index, 1);
@@ -430,7 +444,7 @@
       const cart = getCart();
       const container = document.getElementById('cart-content');
       const totalItems = cart.reduce((acc, item) => acc + (item.qty || 1), 0);
-      
+
       document.getElementById('cart-badge').innerText = totalItems;
 
       if (cart.length === 0) {
@@ -510,7 +524,7 @@
     function updateSummary() {
       const cart = getCart();
       const subtotal = cart.reduce((acc, item) => acc + (item.price * (item.qty || 1)), 0);
-      
+
       const currentShipping = cart.length === 0 ? 0 : shippingCost;
       document.getElementById('summary-subtotal').innerText = formatBRL(subtotal);
       document.getElementById('summary-shipping').innerText = currentShipping === 0 ? 'GRÁTIS' : formatBRL(currentShipping);
@@ -537,6 +551,7 @@
       }
 
       const finalTotal = baseAmount - pixDiscount + currentShipping;
+      currentTotal = finalTotal;
       document.getElementById('summary-total').innerText = formatBRL(finalTotal);
 
       const installmentsSelect = document.getElementById('cc-installments');
@@ -548,12 +563,43 @@
           optionsHTML += `<option value="${i}">${i}x de ${formatBRL(val)} sem juros</option>`;
         }
         installmentsSelect.innerHTML = optionsHTML;
-        hint.innerText = currentPayment === 'credit' 
-          ? `ou em até 12x de ${formatBRL(finalTotal / 12)} sem juros` 
+        hint.innerText = currentPayment === 'credit'
+          ? `ou em até 12x de ${formatBRL(finalTotal / 12)} sem juros`
           : 'Pagamento à vista';
       } else {
         hint.innerText = '';
       }
+    }
+
+    function renderHistory() {
+      const orders = getOrders().slice().reverse();
+      const container = document.getElementById('history-content');
+      const paymentNames = { pix: 'PIX', credit: 'Cartão de Crédito', boleto: 'Boleto' };
+
+      if (orders.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-4">
+            <i class="bi bi-bag-x display-3 text-secondary d-block mb-3"></i>
+            <p class="text-secondary mb-0">Você ainda não fez nenhuma compra.</p>
+          </div>`;
+        return;
+      }
+
+      container.innerHTML = orders.map(order => `
+        <div class="card card-custom p-3 mb-3">
+          <div class="d-flex justify-content-between flex-wrap gap-2 mb-2">
+            <strong>Pedido #${order.number}</strong>
+            <small class="text-secondary">${order.date}</small>
+          </div>
+          <ul class="small text-secondary mb-2 ps-3">
+            ${order.items.map(i => `<li>${i.qty || 1}x ${i.name}</li>`).join('')}
+          </ul>
+          <div class="d-flex justify-content-between">
+            <span class="badge bg-secondary">${paymentNames[order.payment] || order.payment}</span>
+            <strong class="text-danger">${formatBRL(order.total)}</strong>
+          </div>
+        </div>
+      `).join('');
     }
 
     function finishOrder() {
@@ -575,6 +621,17 @@
       const orderNumber = Math.floor(100000 + Math.random() * 900000);
       const totalPaid = document.getElementById('summary-total').innerText;
       const modalBody = document.getElementById('modal-order-body');
+
+      const order = {
+        number: orderNumber,
+        date: new Date().toLocaleString('pt-BR'),
+        items: cart,
+        payment: currentPayment,
+        total: currentTotal
+      };
+      const orders = getOrders();
+      orders.push(order);
+      localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
 
       if (currentPayment === 'pix') {
         modalBody.innerHTML = `
@@ -606,6 +663,7 @@
 
       localStorage.removeItem(CART_KEY);
       renderCart();
+      renderHistory();
 
       const modal = new bootstrap.Modal(document.getElementById('orderSuccessModal'));
       modal.show();
@@ -623,9 +681,13 @@
 
     window.addEventListener('storage', (e) => {
       if (e.key === CART_KEY) renderCart();
+      if (e.key === ORDERS_KEY) renderHistory();
     });
 
-    document.addEventListener('DOMContentLoaded', renderCart);
+    document.addEventListener('DOMContentLoaded', function () {
+      renderCart();
+      renderHistory();
+    });
   </script>
 </body>
 </html>
