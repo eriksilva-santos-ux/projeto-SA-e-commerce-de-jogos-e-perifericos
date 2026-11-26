@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GameStore - Carrinho de Compras</title>
+  <title>Vortex - Carrinho de Compras</title>
   <!-- Bootstrap 5.3 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Bootstrap Icons -->
@@ -79,28 +79,25 @@
   <header class="sticky-top">
     <nav class="navbar navbar-expand-lg navbar-dark py-3">
       <div class="container">
-        <!-- Logo -->
         <a href="index.html" class="navbar-brand d-flex align-items-center py-0">
-          <img src="imagens/logo.png" alt="Vortex" style="height: 67px; width: auto; object-fit: contain;">
-        </a>
-        <title>Vortex - E-commerce de Jogos, Consoles e Periféricos</title>
-        <!-- No <footer> -->
-        <a class="navbar-brand brand-logo fs-4" href="index.html">
-          <i>VORTEX</i>
+          <img src="imagens/logo.png" alt="Vortex" style="height: 67px; width: auto; object-fit: contain;" onerror="this.style.display='none'">
+          <span class="brand-logo fs-4"><i>VORTEX</i></span>
         </a>
 
-        <!-- Botão Toggle Mobile -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
           <span class="navbar-toggler-icon"></span>
         </button>
 
-          <!-- Ações de Usuário -->
+        <div class="collapse navbar-collapse mt-3 mt-lg-0" id="navbarContent">
           <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0 ms-auto">
             <a href="index.html" class="btn btn-outline-light btn-sm text-nowrap">
               <i class="bi bi-house-door"></i> Início
             </a>
             <a href="register.html" class="btn btn-outline-light btn-sm text-nowrap">
               <i class="bi bi-person-plus"></i> Cadastro
+            </a>
+            <a href="acesso.html" class="btn btn-outline-light btn-sm text-nowrap">
+              <i class="bi bi-person-lock"></i> Acesso Restrito
             </a>
             <a href="login.html" class="btn btn-outline-light btn-sm text-nowrap">
               <i class="bi bi-box-arrow-in-right"></i> Login
@@ -132,9 +129,7 @@
         
         <!-- CARD PRODUTOS -->
         <div class="card card-custom p-3 p-md-4 shadow mb-4">
-          <div id="cart-content">
-            <!-- Tabela preenchida via JavaScript -->
-          </div>
+          <div id="cart-content"></div>
 
           <!-- Cupom de Desconto e Voltar -->
           <div id="cart-actions" class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4 pt-3 border-top border-secondary gap-3">
@@ -156,7 +151,6 @@
             <i class="bi bi-wallet2 text-danger me-2"></i>Forma de Pagamento
           </h5>
 
-          <!-- Opções de Seleção -->
           <div class="row g-3 mb-4">
             <div class="col-md-4">
               <div class="payment-option p-3 h-100 active" onclick="selectPayment('pix', this)">
@@ -188,7 +182,7 @@
             </div>
           </div>
 
-          <!-- Detalhes Dinâmicos: PIX -->
+          <!-- PIX -->
           <div id="panel-pix" class="payment-panel bg-dark p-3 rounded border border-secondary">
             <div class="d-flex align-items-center gap-3">
               <i class="bi bi-qr-code display-4 text-success"></i>
@@ -201,7 +195,7 @@
             </div>
           </div>
 
-          <!-- Detalhes Dinâmicos: CARTÃO DE CRÉDITO -->
+          <!-- CARTÃO -->
           <div id="panel-credit" class="payment-panel bg-dark p-3 rounded border border-secondary d-none">
             <div class="row g-3">
               <div class="col-12">
@@ -225,13 +219,12 @@
               </div>
               <div class="col-12 col-md-4">
                 <label class="form-label small text-secondary">Parcelamento</label>
-                <select id="cc-installments" class="form-select form-select-sm bg-dark text-white border-secondary">
-                </select>
+                <select id="cc-installments" class="form-select form-select-sm bg-dark text-white border-secondary"></select>
               </div>
             </div>
           </div>
 
-          <!-- Detalhes Dinâmicos: BOLETO -->
+          <!-- BOLETO -->
           <div id="panel-boleto" class="payment-panel bg-dark p-3 rounded border border-secondary d-none">
             <div class="d-flex align-items-center gap-3">
               <i class="bi bi-file-earmark-text display-4 text-warning"></i>
@@ -252,7 +245,6 @@
         <div class="card card-custom p-4 shadow sticky-lg-top" style="top: 95px;">
           <h5 class="fw-bold text-white mb-3">Resumo do Pedido</h5>
           
-          <!-- Cálculo de Frete -->
           <div class="mb-3">
             <label class="form-label small text-secondary">Calcular Frete (CEP)</label>
             <div class="input-group input-group-sm">
@@ -314,8 +306,7 @@
           </h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body text-center py-4" id="modal-order-body">
-        </div>
+        <div class="modal-body text-center py-4" id="modal-order-body"></div>
         <div class="modal-footer border-secondary">
           <a href="index.html" class="btn btn-action w-100">Voltar para a Loja</a>
         </div>
@@ -323,11 +314,16 @@
     </div>
   </div>
 
-  <!-- FOOTER / RODAPÉ -->
+  <!-- FOOTER -->
   <footer class="py-4 mt-auto">
     <div class="container">
       <div class="row align-items-center gy-3">
-        <div class="col-md-12 text-center">
+        <div class="col-md-6 text-center text-md-start">
+          <a class="navbar-brand brand-logo fs-4" href="index.html">
+            <i>VORTEX</i>
+          </a>
+        </div>
+        <div class="col-md-6 text-center text-md-end">
           <p class="text-secondary small mb-0">
             © 2026 Vortex. Todos os direitos reservados. Termos de Direitos Autorais.
           </p>
@@ -339,22 +335,22 @@
   <!-- Bootstrap 5.3 JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- SCRIPT DO CARRINHO E PAGAMENTO -->
   <script>
+    const CART_KEY = 'vortex_cart';
     let currentPayment = 'pix';
     let shippingCost = 0;
     let couponDiscountRate = 0;
 
     function formatBRL(value) {
-      return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+      return Number(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     }
 
     function getCart() {
-      return JSON.parse(localStorage.getItem('gamestore_cart')) || [];
+      return JSON.parse(localStorage.getItem(CART_KEY)) || [];
     }
 
     function saveCart(cart) {
-      localStorage.setItem('gamestore_cart', JSON.stringify(cart));
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
       renderCart();
     }
 
@@ -362,7 +358,7 @@
       let cart = getCart();
       if (!cart[index]) return;
       
-      cart[index].qty += delta;
+      cart[index].qty = (cart[index].qty || 1) + delta;
       if (cart[index].qty <= 0) {
         cart.splice(index, 1);
       }
@@ -376,7 +372,7 @@
     }
 
     function clearCart() {
-      localStorage.removeItem('gamestore_cart');
+      localStorage.removeItem(CART_KEY);
       renderCart();
     }
 
@@ -400,7 +396,7 @@
       }
 
       const cart = getCart();
-      const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+      const subtotal = cart.reduce((acc, item) => acc + (item.price * (item.qty || 1)), 0);
 
       if (subtotal >= 300) {
         shippingCost = 0;
@@ -433,7 +429,7 @@
     function renderCart() {
       const cart = getCart();
       const container = document.getElementById('cart-content');
-      const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+      const totalItems = cart.reduce((acc, item) => acc + (item.qty || 1), 0);
       
       document.getElementById('cart-badge').innerText = totalItems;
 
@@ -460,12 +456,13 @@
 
       let rowsHTML = '';
       cart.forEach((item, index) => {
-        const itemSubtotal = item.price * item.qty;
+        const qty = item.qty || 1;
+        const itemSubtotal = item.price * qty;
         rowsHTML += `
           <tr>
             <td>
               <div class="d-flex align-items-center gap-3">
-                <img src="${item.image}" onerror="this.src='https://placehold.co/64x64/121620/ff0055?text=Game'" class="img-product-thumb" alt="${item.name}">
+                <img src="${item.image}" onerror="this.src='https://placehold.co/64x64/121620/ff0055?text=Vortex'" class="img-product-thumb" alt="${item.name}">
                 <div>
                   <h6 class="mb-0 text-white fw-bold small">${item.name}</h6>
                   <span class="badge bg-secondary small mt-1">${item.category}</span>
@@ -476,7 +473,7 @@
             <td>
               <div class="input-group input-group-sm mx-auto" style="max-width: 105px;">
                 <button onclick="updateQty(${index}, -1)" class="btn btn-outline-secondary text-white" type="button">-</button>
-                <input type="text" class="form-control bg-dark text-white text-center border-secondary" value="${item.qty}" readonly>
+                <input type="text" class="form-control bg-dark text-white text-center border-secondary" value="${qty}" readonly>
                 <button onclick="updateQty(${index}, 1)" class="btn btn-outline-secondary text-white" type="button">+</button>
               </div>
             </td>
@@ -512,7 +509,7 @@
 
     function updateSummary() {
       const cart = getCart();
-      const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+      const subtotal = cart.reduce((acc, item) => acc + (item.price * (item.qty || 1)), 0);
       
       const currentShipping = cart.length === 0 ? 0 : shippingCost;
       document.getElementById('summary-subtotal').innerText = formatBRL(subtotal);
@@ -585,7 +582,7 @@
           <i class="bi bi-qr-code display-1 text-white my-3 d-block"></i>
           <p class="small text-secondary mb-2">Escaneie o QR Code acima ou copie a chave PIX abaixo para pagar <strong>${totalPaid}</strong>:</p>
           <div class="input-group input-group-sm mb-3">
-            <input type="text" class="form-control bg-secondary text-white border-0" value="00020126580014BR.GOV.BCB.PIX0136gamestore-pagamentos-2026" readonly>
+            <input type="text" class="form-control bg-secondary text-white border-0" value="00020126580014BR.GOV.BCB.PIX0136vortex-pagamentos-2026" readonly>
             <button class="btn btn-outline-light" onclick="alert('Chave PIX copiada!')">Copiar</button>
           </div>
         `;
@@ -607,7 +604,7 @@
         `;
       }
 
-      localStorage.removeItem('gamestore_cart');
+      localStorage.removeItem(CART_KEY);
       renderCart();
 
       const modal = new bootstrap.Modal(document.getElementById('orderSuccessModal'));
@@ -622,6 +619,10 @@
     });
     document.getElementById('cep-input')?.addEventListener('input', function (e) {
       e.target.value = e.target.value.replace(/\D/g, '').replace(/(\d{5})(?=\d)/g, '$1-');
+    });
+
+    window.addEventListener('storage', (e) => {
+      if (e.key === CART_KEY) renderCart();
     });
 
     document.addEventListener('DOMContentLoaded', renderCart);

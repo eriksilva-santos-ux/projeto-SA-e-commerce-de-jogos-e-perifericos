@@ -45,6 +45,10 @@
       color: #fff;
       transform: translateY(-2px);
     }
+    .btn-action:disabled {
+      background-color: #64748b;
+      transform: none;
+    }
     .auth-card {
       background-color: var(--bg-surface);
       border: 1px solid var(--border-subtle);
@@ -73,6 +77,17 @@
       border-color: var(--accent-pink);
       color: var(--accent-pink);
     }
+    .btn-toggle-pass {
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-left: none;
+      color: var(--text-muted);
+    }
+    .btn-toggle-pass:hover {
+      color: #fff;
+      background-color: var(--bg-input);
+      border-color: var(--border-subtle);
+    }
     footer {
       background-color: var(--bg-surface);
       border-top: 1px solid var(--border-subtle);
@@ -86,7 +101,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark py-3">
       <div class="container">
         <a href="index.html" class="navbar-brand d-flex align-items-center py-0">
-          <img src="imagens/logo.png" alt="Vortex" style="height: 67px; width: auto; object-fit: contain;">
+          <img src="imagens/logo.png" alt="Vortex" style="height: 67px; width: auto; object-fit: contain;" onerror="this.style.display='none'">
           <span class="brand-logo fs-4"><i>VORTEX</i></span>
         </a>
 
@@ -132,13 +147,16 @@
               <p class="text-secondary small mb-0">Gerencie pedidos, produtos e usuários do sistema.</p>
             </div>
 
-            <form action="painel.html" method="POST" class="mt-4">
+            <!-- ALERTA DE FEEDBACK -->
+            <div id="feedbackAlert" class="alert d-none mt-3 mb-0 py-2 small" role="alert"></div>
+
+            <form id="adminLoginForm" class="mt-4" novalidate>
               <!-- ID -->
               <div class="mb-3">
                 <label for="adminId" class="form-label text-secondary small fw-semibold">ID de Administrador</label>
                 <div class="input-group">
                   <span class="input-group-text input-group-text-custom"><i class="bi bi-fingerprint"></i></span>
-                  <input type="text" class="form-control form-control-custom" id="adminId" placeholder="Ex: 12345" required>
+                  <input type="text" class="form-control form-control-custom" id="adminId" placeholder="Ex: 12345" autocomplete="off" required>
                 </div>
               </div>
 
@@ -148,14 +166,24 @@
                 <div class="input-group">
                   <span class="input-group-text input-group-text-custom"><i class="bi bi-lock"></i></span>
                   <input type="password" class="form-control form-control-custom" id="adminPassword" placeholder="••••••••" required>
+                  <button class="btn btn-toggle-pass" type="button" id="togglePasswordBtn" title="Mostrar/Ocultar senha">
+                    <i class="bi bi-eye" id="togglePasswordIcon"></i>
+                  </button>
                 </div>
               </div>
 
               <!-- Botão Entrar -->
-              <a href="painel.html" class="btn btn-action w-100 py-2">
+              <button type="submit" id="submitBtn" class="btn btn-action w-100 py-2">
                 <i class="bi bi-box-arrow-in-right me-2"></i> Entrar no Painel
-              </a>
+              </button>
             </form>
+
+            <!-- DICA DE TESTE -->
+            <div class="mt-4 pt-3 border-top border-secondary border-opacity-25 text-center">
+              <small class="text-secondary">
+                Acesso de teste: ID <code class="text-light">12345</code> | Senha <code class="text-light">admin123</code>
+              </small>
+            </div>
           </div>
         </div>
       </div>
@@ -172,5 +200,96 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const adminsAutorizados = [
+      { id: '12345', senha: 'admin123', nome: 'Administrador Master', cargo: 'Gerente Geral' },
+      { id: '99999', senha: 'vortex2026', nome: 'Suporte Vortex', cargo: 'Operador' }
+    ];
+
+    const adminLoginForm = document.getElementById('adminLoginForm');
+    const adminIdInput = document.getElementById('adminId');
+    const adminPasswordInput = document.getElementById('adminPassword');
+    const feedbackAlert = document.getElementById('feedbackAlert');
+    const submitBtn = document.getElementById('submitBtn');
+    const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+    const togglePasswordIcon = document.getElementById('togglePasswordIcon');
+
+    let tentativas = 0;
+    const maxTentativas = 3;
+
+    // Se já estiver logado, mostra atalho direto para o painel
+    const sessaoAtiva = JSON.parse(sessionStorage.getItem('adminLogado'));
+    if (sessaoAtiva) {
+      mostrarAlerta(`Sessão ativa como ${sessaoAtiva.nome}. <a href="cadastro-produto.html" class="alert-link">Ir para o painel</a>`, 'info');
+    }
+
+    function atualizarBadgeCarrinho() {
+      const cartBadge = document.getElementById('cart-badge');
+      const carrinho = JSON.parse(localStorage.getItem('vortex_cart')) || [];
+      const totalItens = carrinho.reduce((acc, item) => acc + (item.qty || 1), 0);
+      if (cartBadge) cartBadge.textContent = totalItens;
+    }
+    atualizarBadgeCarrinho();
+
+    togglePasswordBtn.addEventListener('click', function () {
+      const isPassword = adminPasswordInput.type === 'password';
+      adminPasswordInput.type = isPassword ? 'text' : 'password';
+      togglePasswordIcon.classList.toggle('bi-eye', !isPassword);
+      togglePasswordIcon.classList.toggle('bi-eye-slash', isPassword);
+    });
+
+    function mostrarAlerta(mensagem, tipo) {
+      feedbackAlert.className = `alert alert-${tipo} mt-3 mb-0 py-2 small d-flex align-items-center gap-2`;
+      const icone = tipo === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill';
+      feedbackAlert.innerHTML = `<i class="bi ${icone}"></i><span>${mensagem}</span>`;
+    }
+
+    adminLoginForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const idDigitado = adminIdInput.value.trim();
+      const senhaDigitada = adminPasswordInput.value;
+
+      if (!idDigitado || !senhaDigitada) {
+        mostrarAlerta('Preencha o ID de Administrador e a senha.', 'warning');
+        return;
+      }
+
+      const adminEncontrado = adminsAutorizados.find(
+        (adm) => adm.id === idDigitado && adm.senha === senhaDigitada
+      );
+
+      if (adminEncontrado) {
+        sessionStorage.setItem('adminLogado', JSON.stringify({
+          id: adminEncontrado.id,
+          nome: adminEncontrado.nome,
+          cargo: adminEncontrado.cargo,
+          loginEm: new Date().toISOString()
+        }));
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Acessando...';
+        mostrarAlerta(`Bem-vindo(a), ${adminEncontrado.nome}! Redirecionando...`, 'success');
+
+        setTimeout(() => {
+          window.location.href = 'cadastro-produto.html';
+        }, 800);
+      } else {
+        tentativas++;
+        const restantes = maxTentativas - tentativas;
+
+        if (restantes <= 0) {
+          submitBtn.disabled = true;
+          adminIdInput.disabled = true;
+          adminPasswordInput.disabled = true;
+          mostrarAlerta('Acesso bloqueado temporariamente por excesso de tentativas inválidas.', 'danger');
+        } else {
+          mostrarAlerta(`ID ou senha inválidos. Você tem mais ${restantes} tentativa(s).`, 'danger');
+          adminPasswordInput.value = '';
+          adminPasswordInput.focus();
+        }
+      }
+    });
+  </script>
 </body>
 </html>
