@@ -265,7 +265,7 @@ const adminSessao = JSON.parse(sessionStorage.getItem('adminLogado'));
           categoria: 'Jogos',
           selo: 'Novidade',
           opcoes: 'PS5',
-          imagem: 'https://image.api.playstation.com/vulcan/ap/rnd/202510/0721/e54995d925972b21f0092d0f27a4884f2c883c439514dede.png',
+          imagem: 'https://cdn.awsli.com.br/600x700/2992/2992030/produto/401287569/98230101990542c5b75f1d4bdef9c77f-iv4uvrhlrf.png',
           descricao: "Marvel's Wolverine é um jogo de ação e aventura em terceira pessoa focado em entregar uma experiência visceral, adulta e brutal na pele de Logan. Desenvolvido pela Insomniac Games para PlayStation 5, o título traz uma história original e emocionante onde o mutante embarca em uma jornada global — passando por locais icônicos como o Canadá e Madripoor — para desvendar mistérios do seu passado e lutar pela sobrevivência da espécie mutante."
         },
         {
