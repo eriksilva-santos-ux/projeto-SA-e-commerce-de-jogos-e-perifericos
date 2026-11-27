@@ -258,39 +258,39 @@ const adminSessao = JSON.parse(sessionStorage.getItem('adminLogado'));
       const exemplos = [
         {
           id: Date.now() + 1,
-          nome: 'Grand Theft Auto VI',
-          marca: 'Rockstar Games',
-          preco: 349.90,
-          estoque: 15,
+          nome: "Marvel's Wolverine",
+          marca: 'Insomniac Games',
+          preco: 317.07,
+          estoque: 10,
           categoria: 'Jogos',
           selo: 'Novidade',
-          opcoes: 'PS5, Xbox Series X/S, PC',
-          imagem: 'imagens/GTA_VI_cover.jpg',
-          descricao: 'Grand Theft Auto VI leva você para o estado de Leonida, lar das ruas em neon de Vice City, na maior e mais imersiva evolução da franquia até hoje.'
+          opcoes: 'PS5',
+          imagem: 'https://image.api.playstation.com/vulcan/ap/rnd/202510/0721/e54995d925972b21f0092d0f27a4884f2c883c439514dede.png',
+          descricao: "Marvel's Wolverine é um jogo de ação e aventura em terceira pessoa focado em entregar uma experiência visceral, adulta e brutal na pele de Logan. Desenvolvido pela Insomniac Games para PlayStation 5, o título traz uma história original e emocionante onde o mutante embarca em uma jornada global — passando por locais icônicos como o Canadá e Madripoor — para desvendar mistérios do seu passado e lutar pela sobrevivência da espécie mutante."
         },
         {
           id: Date.now() + 2,
-          nome: 'PlayStation 5 Pro SSD 2TB',
-          marca: 'Sony',
-          preco: 7390.00,
+          nome: 'EA SPORTS FC™ 26',
+          marca: 'Electronic Arts',
+          preco: 349.90,
           estoque: 4,
-          categoria: 'Consoles',
+          categoria: 'Jogos',
           selo: 'Em Estoque',
-          opcoes: 'Branco',
-          imagem: 'https://images.kabum.com.br/produtos/fotos/636960/console-playstation-5-pro-sony-ssd-2tb-controle-sem-fio-dualsense-branco-1000046552_1727095996_g.jpg',
-          descricao: 'O PlayStation 5 Pro entrega gráficos ultrarrealistas com Ray Tracing avançado, resolução 4K nítida com PSSR e armazenamento SSD ultrarrápido de 2TB.'
+          opcoes: 'PS5, PS4, Xbox Series X/S, Xbox One, PC',
+          imagem: 'https://image.api.playstation.com/vulcan/ap/rnd/202608/0314/d0cc38456ebe67005ebea2709f52a3d2f6780985b6403219.png',
+          descricao: 'Jogo de simulação de futebol lançado pela Electronic Arts em setembro de 2025. Desenvolvido pela EA Vancouver e EA Romania, o título conta com mais de 20.000 atletas, 750 clubes e seleções, 120 estádios e 35 ligas.'
         },
         {
           id: Date.now() + 3,
-          nome: 'Teclado Gamer Mecânico Wooting 60HE+',
-          marca: 'Wooting',
-          preco: 1826.00,
-          estoque: 8,
-          categoria: 'Periféricos',
+          nome: 'Grand Theft Auto V',
+          marca: 'Rockstar North',
+          preco: 136.90,
+          estoque: 80,
+          categoria: 'Jogos',
           selo: 'Promoção',
-          opcoes: 'Preto',
-          imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_660385-MLB117250273565_092026-P.webp',
-          descricao: 'Teclado analógico magnético 60% com Rapid Trigger ajustável de 0.1mm, switches Lekker e tempo de resposta competitivo.'
+          opcoes: 'PS5, PS4, PS3, Xbox 360, Xbox Series X/S, Xbox One, PC',
+          imagem: 'https://thumb.wikimedia.org/wikipedia/pt/thumb/8/80/Grand_Theft_Auto_V_capa.png/250px-Grand_Theft_Auto_V_capa.png?utm_source=pt.wikipedia.org&utm_campaign=parser&utm_content=thumbnail',
+          descricao: 'Grand Theft Auto V é um jogo eletrônico de ação-aventura desenvolvido pela Rockstar North e publicado pela Rockstar Games. Ambientado no estado fictício de San Andreas, baseado no sul da Califórnia, o modo história para um jogador acompanha três protagonistas.'
         }
       ];
       salvarProdutos([...atuais, ...exemplos]);
